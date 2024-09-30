@@ -7,20 +7,12 @@ using System.Text;
 using System.IO;
 using System.Reflection.Emit;
 
-
 namespace SLOT_1_optimize_version
 {
     //класс где будут описаны констаты для того чтобы потом при малейших изменениях не менять весь код
-    public static class Const
-    {
-        public const int length = 3; //основная длина слота 3 сивмола(в высоту и длину)
-
-        public const int count_lines = 5; //слот содержит 5 играющих линий
-    }
 
     public static class Program
     {
-
         public static readonly Random rand = new Random(); //рандом задается как глобальная переменная чтобы рандом всегда был разный 
 
         public static readonly char[] array_symbols = { '1', 'J', 'Q', 'K', 'A', '@', '#', '$', '%', '&', '0' }; //11 символов игрового автомата, представлены по последовательной значимости
@@ -331,55 +323,6 @@ namespace SLOT_1_optimize_version
                 result += prev_balance;
             }
             return result;
-        }
-
-        //функция которая подсчитывает средний возврат денег, учитывая баланс при определенной ставке (10 * n * count) раз
-        public static float roi(int balance, int bet, int count)
-        {
-            //теоретическая возврат в сумме средний за 10 раз 
-            float teor_roi = 0;
-
-            for (int i = 0; i < 10; i++)
-            {
-                int n = 1_000_000, sum = 0;
-                for (int j = 0; j < n; j++)
-                {
-                    sum += make_full_auto_spin_without_info(balance, bet, count);
-                }
-                //теоретическая возврат в сумме
-                float teor_ret = (float)sum / n;                                  //в процентах
-                Console.WriteLine($"{teor_ret} теоретический возврат в этот раз {(teor_ret / balance) * 100}%");
-                teor_roi += (teor_ret / balance) * 100;
-            }
-            return teor_roi / 10;
-        }
-
-        //попытка нарисовать график
-        public static void test()
-        {
-            for (int i = 1; i< 100; i++)
-            {
-                for (int j = 1; j< 11; j++)
-                {
-                    Console.WriteLine($"это значение на координатах (y)... (x){j} {roi(j, 1, j)}");
-
-                }
-            }   
-        }
-            
-        //функция которая считает количество спинов, которое пользователь сделал до того момента пока баланс не стал меньше ставки, полученный выигрыш учитывается
-        public static int check_count_spins(int balance, int bet)
-        {   
-            int count = 0;
-            while (balance > bet)
-            {
-                //Console.WriteLine(count);
-                count++;
-                random_fill(slot);
-                int win = new_pay_out(bet, check_result_spin_char(slot));
-                balance = give_money(bet, win, balance);
-            }
-            return count;
         }
         
         public static void Main()

@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 namespace SLOT_1_optimize_version
 {
     public class Hashcode
@@ -75,7 +74,7 @@ namespace SLOT_1_optimize_version
 
         }
 
-        //вспомогающая в кодировке функция которая 
+        //вспомогающая в кодировке функция которая перворачивает массив
         public static string add_confus(string str)
         {
             char[] arr = str.ToCharArray();

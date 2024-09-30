@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 
-
 namespace SLOT_1_optimize_version
 {
     public static class Game
