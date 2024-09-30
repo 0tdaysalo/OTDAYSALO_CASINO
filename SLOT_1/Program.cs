@@ -1,24 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Reflection.Emit;
 
-namespace SLOT_1_optimize_version
+namespace SLOT_1
 {
-    //класс где будут описаны констаты для того чтобы потом при малейших изменениях не менять весь код
-
     public static class Program
     {
-        public static readonly Random rand = new Random(); //рандом задается как глобальная переменная чтобы рандом всегда был разный 
+        public static readonly Random rand = new Random();
 
-        public static readonly char[] array_symbols = { '1', 'J', 'Q', 'K', 'A', '@', '#', '$', '%', '&', '0' }; //11 символов игрового автомата, представлены по последовательной значимости
+        //11 символов слота, последовательная значимости
+        public static readonly char[] array_symbols = { '1', 'J', 'Q', 'K', 'A', '@', '#', '$', '%', '&', '0' };
 
-        public static readonly int[] arrray_symbols_convert_to_num = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; // значения соответствующие array_symbols по индексу, пока что не нужно
-
+        //подсчет выплат по символам
         public static readonly Dictionary<char, int> array_symbols_dic = new Dictionary<char, int>()
         {
             {'1', 1},
@@ -32,12 +24,13 @@ namespace SLOT_1_optimize_version
             {'%', 1},
             {'&', 1},
             {'0', 250},
-        }; //словарь для подсчета выплаты по символам
+        };
 
-        public static char[,] slot = new char[Const.length, Const.length]; //объявление слота в виде матрицы 3х3, стандартного барабана
+        //объявление слота в виде матрицы равной длины
+        public static char[,] slot = new char[Const.length, Const.length];
 
 
-        //функция для рандомного заполнения барабана в виде матрицы char
+        //рандомное заполнения слота в виде матрицы char
         public static char[,] random_fill(char[,] slot)
         {
             for (int i = 0; i < Const.length; i++)
@@ -50,74 +43,9 @@ namespace SLOT_1_optimize_version
             return slot;
         }
 
-        //функция для получения матрицы int перебирая матрицу char
-        public static int[,] get_value_of_fill(char[,] slot)
+        //красивый вывод (ТОЛЬКО!) слота 
+        public static void beaut_print(char[,] slot)
         {
-            int[,] slot_int = new int[Const.length, Const.length];
-
-            for (int i = 0; i < Const.length; i++)
-            {
-                for (int j = 0; j < Const.length; j++)
-                {
-                    slot_int[i, j] = array_symbols.ToList().IndexOf(slot[i, j]);
-                    //switch (slot[i, j])
-                    //{
-                    //    case '1':
-                    //        slot_int[i, j] = 0;
-
-                    //        break;
-                    //    case 'J':
-                    //        slot_int[i, j] = 1;
-
-                    //        break;
-                    //    case 'Q':
-                    //        slot_int[i, j] = 2;
-
-                    //        break;
-                    //    case 'K':
-                    //        slot_int[i, j] = 3;
-
-                    //        break;
-                    //    case 'A':
-                    //        slot_int[i, j] = 4;
-
-                    //        break;
-                    //    case '@':
-                    //        slot_int[i, j] = 5;
-
-                    //        break;
-                    //    case '#':
-                    //        slot_int[i, j] = 6;
-
-                    //        break;
-                    //    case '$':
-                    //        slot_int[i, j] = 7;
-
-                    //        break;
-                    //    case '%':
-                    //        slot_int[i, j] = 8;
-
-                    //        break;
-                    //    case '&':
-                    //        slot_int[i, j] = 9;
-
-                    //        break;
-                    //    case '0':
-                    //        slot_int[i, j] = 10;
-
-                    //        break;
-
-                    //}
-                }
-            }
-
-            return slot_int;
-        }
-
-        //функция для того чтобы красиво выводить барабан 
-        public static void good_beaut_print(char[,] slot)
-        {
-            //функция для того чтобы красиво выводить барабан 
             Console.WriteLine("-----");
             for (int i = 0; i < Const.length; i++)
             {
@@ -131,9 +59,9 @@ namespace SLOT_1_optimize_version
             Console.WriteLine("-----");
         }
 
-        //функция в которой задаются все играющие комбинации 
-        public static char[] check_result_spin_char(char[,] slot)
-        {   
+        //задаются все играющие комбинации 
+        public static char[] get_win_set(char[,] slot)
+        {
 
             //в этом слоте всего 5 линий, 3 по строкам и 2 по диагоналям
             char[] arr_of_lines = new char[Const.count_lines];
@@ -149,76 +77,18 @@ namespace SLOT_1_optimize_version
 
             return arr_of_lines;
         }
-        
-        //функция для подсчета выплаты используя конструкцию switch
+
+        //подсчет выплат
         public static int pay_out(int bet, char[] arr_of_lines)
         {
+            //используется словарь: ключ - значение
+
             int total_win = 0;
             for (int i = 0; i < arr_of_lines.Length; i++)
             {
                 if (arr_of_lines[i] != 0)
                 {
-                    switch (arr_of_lines[i])
-                    {
-                        case '1':
-                            total_win += bet;
-                            break;
-
-                        case 'J':
-                            total_win += bet * 1;
-                            break;
-
-                        case 'Q':
-                            total_win += bet * 1;
-                            break;
-
-                        case 'K':
-                            total_win += bet * 1;
-                            break;
-
-                        case 'A':
-                            total_win += bet * 1;
-                            break;
-
-                        case '@':
-                            total_win += bet * 1;
-                            break;
-
-                        case '#':
-                            total_win += bet * 1;
-                            break;
-
-                        case '$':
-                            total_win += bet * 1;
-                            break;
-
-                        case '%':
-                            total_win += bet * 1;
-                            break;
-
-                        case '&':
-                            total_win += bet * 1;
-                            break;
-
-                        case '0':
-                            total_win += bet * 250;
-                            break;
-                    }
-                }
-            }
-
-            return total_win;
-        }
-
-        //функция для подсчета выплаты используя словарь ключ-значение
-        public static int new_pay_out(int bet, char[] arr_of_lines)
-        {
-            int total_win = 0;
-            for (int i = 0; i < arr_of_lines.Length; i++)
-            {
-                if (arr_of_lines[i] != 0)
-                {
-                    foreach(var win in array_symbols_dic)
+                    foreach (var win in array_symbols_dic)
                     {
                         if (arr_of_lines[i] == win.Key)
                             total_win += bet * win.Value;
@@ -229,18 +99,18 @@ namespace SLOT_1_optimize_version
             return total_win;
         }
 
-        //функция для взаимодействия с балансом на основе выплаты за спин
-        public static int give_money(int bet, int win, int balance)
+        //взаимодействие с балансом на основе выплаты за спин
+        public static int give_win(int bet, int win, int balance)
         {
             balance -= bet;
-            if (win != 0) balance += win;           
+            if (win != 0) balance += win;
             return balance;
         }
 
-        //функция для вывода инфомации о совершённом спине в консоль
+        //вывод инфо о совершённом спине
         public static void info_about_spin(int win, char[] arr_of_lines, int balance, char[,] slot, int bet)
         {
-            good_beaut_print(slot);
+            beaut_print(slot);
             if (win != 0)
             {
                 Console.WriteLine($"поздравляем: вы выиграли монет {win}, ваш баланс {balance + win}, ставка: {bet}");
@@ -258,29 +128,29 @@ namespace SLOT_1_optimize_version
             }
         }
 
-        //функция для автоматического запуска слотов для определенного баланс, ставки, и количество спинов, возвращает баланс
-        public static int make_full_auto_spin(int balance, int bet, int n)
-        {            
-            for (int i = 0; i < n; i++)
-            {                
+        //авто-запуск слота при заданных: баланс, ставка, кол-во спинов, возвращает баланс
+        public static int make_full_auto_spin(int balance, int bet, int coint_spins)
+        {
+            for (int i = 0; i < coint_spins; i++)
+            {
                 if (balance < bet)
                 {
                     Console.WriteLine("недостаточно средств! игра приостановлена");
-                    Console.WriteLine();                   
+                    Console.WriteLine();
                     break;
-                    
-                }              
+
+                }
                 random_fill(slot);
 
 
-                int win = pay_out(bet, check_result_spin_char(slot));
-                //вывод в консоль информации о барабане, ставке, победе, проигрыше, играющей линии (в целом о спине)
+                int win = pay_out(bet, get_win_set(slot));
+                //вывод инфо о слоте, ставке, победе, проигрыше, играющей линии
                 Console.WriteLine($"произошёл {i + 1}-ый спин");
 
 
-                info_about_spin(win, check_result_spin_char(slot), balance, slot, bet);
+                info_about_spin(win, get_win_set(slot), balance, slot, bet);
 
-                balance = give_money(bet, win, balance);
+                balance = give_win(bet, win, balance);
                 Console.WriteLine($"номер спина: {Hashcode.hash_code(slot)}");
                 Console.WriteLine();
             }
@@ -288,50 +158,23 @@ namespace SLOT_1_optimize_version
             return balance;
         }
 
-        //та же функция, что и выше, но без вывода инфомации в консоль, возвращает баланс
-        public static int make_full_auto_spin_without_info(int balance, int bet, int n)
+        //авто-запуск слота обернутый в несколько сессий, возвращает результат игр
+        public static int make_full_auto_spin(int balance, int bet, int coint_spins, int count_session)
         {
-            for (int i = 0; i < n; i++)
-            {
-                if (balance < bet)
-                {
-                    Console.WriteLine("недостаточно средств! игра приостановлена");
-                    Console.WriteLine();
-                    break;
-                }
-                
-                random_fill(slot);
-
-                //int win = pay_out(bet, check_result_spin_char(slot));
-                    ////можно использовать и то и то, пока что не знаю что быстрее, new_pay_out короче, запутаннее , а pay_out более понятнее, но говно-код
-                int win = new_pay_out(bet, check_result_spin_char(slot)); 
-                
-                balance = give_money(bet, win, balance);
-            }
-
-            return balance;
-        }
-
-        //введите количество сессий, и изначальный баланс, ставку и количество спинов,  возвращает результат сессии
-        public static int make_full_auto_spin(int balance, int bet, int n, int count_session)
-        {
+            //баланс задается на 1 сессию
             int result = 0;
             int prev_balance = balance;
             for (int i = 0; i < count_session; i++)
             {
-                prev_balance = make_full_auto_spin(prev_balance, bet, n);
+                prev_balance = make_full_auto_spin(prev_balance, bet, coint_spins);
                 result += prev_balance;
             }
             return result;
         }
-        
+
         public static void Main()
         {
-            make_full_auto_spin(1000, 10, 5);
-
-            //hash_uncode(hash_code(slot));
-
-            //Game.game();
+            Game.game();
 
             Console.ReadLine();
         }

@@ -1,9 +1,11 @@
-﻿namespace SLOT_1_optimize_version
+﻿namespace SLOT_1
 {
     public static class Const
     {
-        public const int length = 3; //основная длина слота 3 сивмола(в высоту и длину)
+        //основная длина слота 3 сивмола(вертикально и горизонтально)
+        public const int length = 3;
 
-        public const int count_lines = 5; //слот содержит 5 играющих линий
+        //5 играющих линий
+        public const int count_lines = 5;
     }
 }

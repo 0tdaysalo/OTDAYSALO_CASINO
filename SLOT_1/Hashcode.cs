@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SLOT_1_optimize_version
+namespace SLOT_1
 {
     public class Hashcode
     {
@@ -68,7 +68,7 @@ namespace SLOT_1_optimize_version
             long unixTimeStampInTicks = date * TimeSpan.TicksPerMillisecond;
             var qwerty = new DateTime(unixEpoch.Ticks + unixTimeStampInTicks, DateTimeKind.Utc);
             Console.WriteLine($"по коду вашего спина равного: {code} найдена комбинация");
-            Program.good_beaut_print(slot_func);
+            Program.beaut_print(slot_func);
 
             Console.WriteLine($"которая была сделана: {qwerty} GMT+0");
 
