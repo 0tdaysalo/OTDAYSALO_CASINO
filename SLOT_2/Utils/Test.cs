@@ -1,10 +1,39 @@
 ﻿using System;
 
-
-namespace SLOT_3
+namespace SLOT_2
 {
     public class Test
     {
+        //% scatter в спине встречается scatter
+        public static void count_scatter_check()
+        {
+            int count = 30000;
+            int scatter = 0;
+            for (int z = 0; z < count; z++)
+            {
+                int check = 0;
+                Program.random_fill(Program.slot);
+
+                for (int i = 0; i < Const.length; i++)
+                {
+                    for (int j = 0; j < Const.length; j++)
+                    {
+                        if (Program.slot[i, j] == 'S')
+                        {
+                            check++;
+                        }
+                    }
+                }
+                if (check >= 3)
+                {
+                    scatter++;
+                    Program.good_beaut_print(Program.slot);
+                }
+
+            }
+            Console.WriteLine($"\nитого процентное количество бонусок {((double)scatter / count) * 100.0}%");
+        }
+
         public static void check_scatter_test(char[,] slot_test)
         {
             int count_test = 0;
@@ -48,7 +77,7 @@ namespace SLOT_3
             }
 
         }
-        
+
         public static void is_ready()
         {
             Console.WriteLine("хихи-хаха, поfixено))");

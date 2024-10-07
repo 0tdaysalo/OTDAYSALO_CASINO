@@ -23,7 +23,7 @@ namespace SLOT_1
         //вывод инфо о совершённом спине
         public static void info_about_spin(int win, char[] arr_of_lines, int balance, char[,] slot, int bet)
         {
-            Printer.beaut_print(slot);
+            beaut_print(slot);
             if (win != 0)
             {
                 Console.WriteLine($"поздравляем: вы выиграли монет {win}, ваш баланс {balance + win}, ставка: {bet}");

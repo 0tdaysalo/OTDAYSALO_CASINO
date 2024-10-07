@@ -6,7 +6,7 @@ namespace SLOT_1
     public static class Game
     {
         //измененная функция make_full_auto_spin для game();
-        public static int make_full_auto_spin_game(int balance, int bet, int n)
+        public static int make_spin_game(int balance, int bet, int n)
         {
             if (balance < bet)
             {
@@ -35,7 +35,7 @@ namespace SLOT_1
             else
             {
                 Program.random_fill(Program.slot);
-                int win = Program.pay_out(bet,  Program.get_win_set(Program. slot));
+                int win = Program.pay_out(bet, Program.get_win_set(Program.slot));
                 tot_win += win;
             }
             return tot_win;
@@ -109,7 +109,7 @@ namespace SLOT_1
                 while (true)
                 {
                     count_spins_game++;
-                    dep = make_full_auto_spin_game(dep, bet, count_spins_game);
+                    dep = make_spin_game(dep, bet, count_spins_game);
 
                     string user_input_2 = Console.ReadLine();
                     if (user_input_2 == "ДЕП")
@@ -171,11 +171,11 @@ namespace SLOT_1
                 Console.WriteLine($"вы выигрываете не сумму, а увеличение ставки на определенный множитель");
                 Console.WriteLine($"в игре {Const.count_lines} играющих линий, 3 горизонтальных и 2 по диагонали");
                 Console.WriteLine($"линия считается сыгравшей если в ней имеется 3 одинаковых символа");
-                foreach (var win in Program.array_symbols_dic)
+                foreach (var win in Const.array_symbols_dic)
                 {
                     Console.WriteLine($"символ {win.Key} увеличивает ставку в {win.Value} раз");
                 }
-                Console.WriteLine($"максимальный выигрыш составляет X{Program.array_symbols_dic.Values.Max() * Const.count_lines} от ставки");
+                Console.WriteLine($"максимальный выигрыш составляет X{Const.array_symbols_dic.Values.Max() * Const.count_lines} от ставки");
                 Console.WriteLine($"теоретический процент возврата вашего баланса составляет 97,7%");
                 Console.WriteLine($"НИКОГДА НЕ ИГРАЙТЕ В АЗАРТНЫЕ ИГРЫ, А ТЕМ БОЛЕЕ В КАЗИНО, ИНАЧЕ ВЫ ОСТАНЕТЕСЬ В МИНУСЕ");
                 Console.WriteLine($"\nнажмите Enter, чтобы выйти");

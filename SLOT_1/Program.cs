@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+
 
 namespace SLOT_1
 {
@@ -10,25 +10,6 @@ namespace SLOT_1
         //объявление singleton слота
         public static char[,] slot = new char[Const.length, Const.length];
 
-        //11 символов слота последовательной значимости
-        public static readonly char[] array_symbols = { '1', 'J', 'Q', 'K', 'A', '@', '#', '$', '%', '&', '0' };
-
-        //подсчет выплат по символам
-        public static readonly Dictionary<char, int> array_symbols_dic = new Dictionary<char, int>()
-        {
-            {'1', 1},
-            {'J', 1},
-            {'Q', 1},
-            {'K', 1},
-            {'A', 1},
-            {'@', 1},
-            {'#', 1},
-            {'$', 1},
-            {'%', 1},
-            {'&', 1},
-            {'0', 250},
-        };
-
         //рандомное заполнения слота
         public static char[,] random_fill(char[,] slot)
         {
@@ -36,7 +17,7 @@ namespace SLOT_1
             {
                 for (int j = 0; j < Const.length; j++)
                 {
-                    slot[i, j] = array_symbols[rand.Next(0, array_symbols.Length)];
+                    slot[i, j] = Const.array_symbols[rand.Next(0, Const.array_symbols.Length)];
                 }
             }
             return slot;
@@ -45,8 +26,7 @@ namespace SLOT_1
         //все играющие комбинации 
         public static char[] get_win_set(char[,] slot)
         {
-
-            //в этом слоте всего 5 линий, 3 по строкам и 2 по диагоналям
+            //в слоте 5 линий: 3 по строкам, 2 по диагоналям
             char[] arr_of_lines = new char[Const.count_lines];
             arr_of_lines[0] = ((slot[1, 0] == slot[1, 1]) && (slot[1, 1] == slot[1, 2])) ? slot[1, 0] : (char)0;
 
@@ -71,7 +51,7 @@ namespace SLOT_1
             {
                 if (arr_of_lines[i] != 0)
                 {
-                    foreach (var win in array_symbols_dic)
+                    foreach (var win in Const.array_symbols_dic)
                     {
                         if (arr_of_lines[i] == win.Key)
                             total_win += bet * win.Value;
@@ -91,7 +71,7 @@ namespace SLOT_1
         }
 
         //авто-запуск слота при заданных: баланс, ставка, кол-во спинов, возвращает баланс
-        public static int make_full_auto_spin(int balance, int bet, int coint_spins)
+        public static int make_spin(int balance, int bet, int coint_spins)
         {
             for (int i = 0; i < coint_spins; i++)
             {
@@ -121,14 +101,14 @@ namespace SLOT_1
         }
 
         //авто-запуск слота обернутый в несколько сессий, возвращает результат игр
-        public static int make_full_auto_spin(int balance, int bet, int coint_spins, int count_session)
+        public static int make_spin(int balance, int bet, int coint_spins, int count_session)
         {
             //баланс задаётся на каждую сессию и суммируется
             int result = 0;
             int prev_balance = balance;
             for (int i = 0; i < count_session; i++)
             {
-                prev_balance = make_full_auto_spin(prev_balance, bet, coint_spins);
+                prev_balance = make_spin(prev_balance, bet, coint_spins);
                 result += prev_balance;
             }
             return result;
@@ -138,7 +118,7 @@ namespace SLOT_1
         {
             Game.game();
 
-            Console.ReadKey();          
+            Console.ReadKey();
         }
     }
 }

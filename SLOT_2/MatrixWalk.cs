@@ -1,5 +1,6 @@
 ﻿using System;
-namespace SLOT_3
+
+namespace SLOT_2
 {
     public class MatrixWalk
     {
@@ -18,12 +19,12 @@ namespace SLOT_3
 
         public static void good_print()
         {
-            for (int q=0; q<Program.list_of_games_symbols.Count; q++)
+            for (int q = 0; q < Program.list_of_games_symbols.Count; q++)
             {
-                    Console.WriteLine($"элемент {q}," +
-                        $" поля:{Program.list_of_games_symbols[q].position_i}," +
-                        $"{Program.list_of_games_symbols[q].position_j}," +
-                        $"{Program.list_of_games_symbols[q].symbol} ");
+                Console.WriteLine($"элемент {q}," +
+                    $" поля:{Program.list_of_games_symbols[q].position_i}," +
+                    $"{Program.list_of_games_symbols[q].position_j}," +
+                    $"{Program.list_of_games_symbols[q].symbol} ");
             }
         }
     }

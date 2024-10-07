@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SLOT_2
+namespace SLOT_3
 {
     public class Program
     {   

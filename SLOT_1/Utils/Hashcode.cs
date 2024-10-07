@@ -14,9 +14,9 @@ namespace SLOT_1
             {
                 for (int j = 0; j < Const.length; j++)
                 {
-                    for (int k = 0; k < Program.array_symbols.Length; k++)
+                    for (int k = 0; k < Const.array_symbols.Length; k++)
                     {
-                        if (slot[i, j] == Program.array_symbols[k])
+                        if (slot[i, j] == Const.array_symbols[k])
                         {
                             code += k.ToString("X");
                         }
@@ -51,17 +51,17 @@ namespace SLOT_1
 
 
 
-            slot_func[0, 0] = Program.array_symbols[Convert.ToInt32(decode_str_rev_arr[0])];
-            slot_func[0, 1] = Program.array_symbols[Convert.ToInt32(decode_str_rev_arr[1])];
-            slot_func[0, 2] = Program.array_symbols[Convert.ToInt32(decode_str_rev_arr[2])];
+            slot_func[0, 0] = Const.array_symbols[Convert.ToInt32(decode_str_rev_arr[0])];
+            slot_func[0, 1] = Const.array_symbols[Convert.ToInt32(decode_str_rev_arr[1])];
+            slot_func[0, 2] = Const.array_symbols[Convert.ToInt32(decode_str_rev_arr[2])];
 
-            slot_func[1, 0] = Program.array_symbols[Convert.ToInt32(decode_str_rev_arr[3])];
-            slot_func[1, 1] = Program.array_symbols[Convert.ToInt32(decode_str_rev_arr[4])];
-            slot_func[1, 2] = Program.array_symbols[Convert.ToInt32(decode_str_rev_arr[5])];
+            slot_func[1, 0] = Const.array_symbols[Convert.ToInt32(decode_str_rev_arr[3])];
+            slot_func[1, 1] = Const.array_symbols[Convert.ToInt32(decode_str_rev_arr[4])];
+            slot_func[1, 2] = Const.array_symbols[Convert.ToInt32(decode_str_rev_arr[5])];
 
-            slot_func[2, 0] = Program.array_symbols[Convert.ToInt32(decode_str_rev_arr[6])];
-            slot_func[2, 1] = Program.array_symbols[Convert.ToInt32(decode_str_rev_arr[7])];
-            slot_func[2, 2] = Program.array_symbols[Convert.ToInt32(decode_str_rev_arr[8])];
+            slot_func[2, 0] = Const.array_symbols[Convert.ToInt32(decode_str_rev_arr[6])];
+            slot_func[2, 1] = Const.array_symbols[Convert.ToInt32(decode_str_rev_arr[7])];
+            slot_func[2, 2] = Const.array_symbols[Convert.ToInt32(decode_str_rev_arr[8])];
             Console.WriteLine();
             //вторая часть
             long date = (long)Convert.ToUInt64((uncode_string[1]));
@@ -77,7 +77,7 @@ namespace SLOT_1
 
         //перворот строки
         public static string add_confus(string str)
-        {   
+        {
             //вспомогательная функция для hash_code и hash_uncode
             char[] arr = str.ToCharArray();
             Array.Reverse(arr);

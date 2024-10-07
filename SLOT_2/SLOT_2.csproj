@@ -45,12 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DictionariesOfPlayingSymbols.cs" />
+    <Compile Include="Const.cs" />
     <Compile Include="MatrixWalk.cs" />
+    <Compile Include="Printer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Test.cs" />
-    <Compile Include="UtilitsFunc.cs" />
+    <Compile Include="Utils\Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
