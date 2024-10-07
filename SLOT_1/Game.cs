@@ -18,7 +18,7 @@ namespace SLOT_1
                 Program.random_fill(Program.slot);
                 int win = Program.pay_out(bet, Program.get_win_set(Program.slot));
                 Console.WriteLine($"произошёл {n}-ый спин");
-                Program.info_about_spin(win, Program.get_win_set(Program.slot), balance, Program.slot, bet);
+                Printer.info_about_spin(win, Program.get_win_set(Program.slot), balance, Program.slot, bet);
                 balance = Program.give_win(bet, win, balance);
             }
             return balance;

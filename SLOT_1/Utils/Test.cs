@@ -5,20 +5,35 @@ namespace SLOT_1
 {
     public class Test
     {
-        //подсчет кол-ва мс, прошедших по истечению части кода 
-        public static void check_time()
+        //подсчет кол-ва мс, прошедших по истечению части кода, в аргументы надо передать функцию
+        public static void check_time(Action action)
         {
-            //подразумевается что будет использоваться для сравнения времени выполнения разных функций
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            //
-            /* сюда нужно передать какую то функцию или код */
-            //
+            //вызов переданной функции
+            action();
 
             stopwatch.Stop();
-            Console.WriteLine();
-            Console.WriteLine(stopwatch.ElapsedMilliseconds);
+            Console.WriteLine($"Время выполнения: {stopwatch.ElapsedMilliseconds} мс");
+
+            ////можно использовать и таким образом
+            //check_time(() =>{ какой то код });
+        }
+
+        //аналогичная check_time, но с возможностью передачи туда функции с возвращаемым значением
+        public static T check_time<T>(Func<T> func)
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
+            
+            T result = func();
+
+            stopwatch.Stop();
+            Console.WriteLine($"Время выполнения: {stopwatch.ElapsedMilliseconds} мс");
+
+            return result; //результат выполнения (если он есть) 
         }
 
         //подсчет среднего возврата от ставки
@@ -80,7 +95,7 @@ namespace SLOT_1
             return balance;
         }
 
-        //попытка нарисовать график (пока что не трогать)
+        //попытка создания графика (пока что не трогать)
         public static void graph()
         {
             for (int i = 1; i < 100; i++)

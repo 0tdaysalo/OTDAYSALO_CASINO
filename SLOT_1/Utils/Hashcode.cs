@@ -4,9 +4,10 @@ namespace SLOT_1
 {
     public class Hashcode
     {
-        //функция которая будет хэшировать данные о спине в виде небольшого кусочка кода по которому можно будет воспроизвести спин
+        //хэширование данных о спине в виде 
         public static string hash_code(char[,] slot)
         {
+            //можно будет воспроизвести спин
             string code = string.Empty;
 
             for (int i = 0; i < Const.length; i++)
@@ -29,7 +30,7 @@ namespace SLOT_1
             return code;
         }
 
-        //функция воспроизведения спина по хэш коду
+        //воспроизведение спина по хэш-коду
         public static void hash_uncode(string code)
         {
             //общее
@@ -68,15 +69,16 @@ namespace SLOT_1
             long unixTimeStampInTicks = date * TimeSpan.TicksPerMillisecond;
             var qwerty = new DateTime(unixEpoch.Ticks + unixTimeStampInTicks, DateTimeKind.Utc);
             Console.WriteLine($"по коду вашего спина равного: {code} найдена комбинация");
-            Program.beaut_print(slot_func);
+            Printer.beaut_print(slot_func);
 
             Console.WriteLine($"которая была сделана: {qwerty} GMT+0");
 
         }
 
-        //вспомогающая в кодировке функция которая перворачивает массив
+        //перворот строки
         public static string add_confus(string str)
-        {
+        {   
+            //вспомогательная функция для hash_code и hash_uncode
             char[] arr = str.ToCharArray();
             Array.Reverse(arr);
             return new string(arr);

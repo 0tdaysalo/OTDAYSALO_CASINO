@@ -7,7 +7,10 @@ namespace SLOT_1
     {
         public static readonly Random rand = new Random();
 
-        //11 символов слота, последовательная значимости
+        //объявление singleton слота
+        public static char[,] slot = new char[Const.length, Const.length];
+
+        //11 символов слота последовательной значимости
         public static readonly char[] array_symbols = { '1', 'J', 'Q', 'K', 'A', '@', '#', '$', '%', '&', '0' };
 
         //подсчет выплат по символам
@@ -26,11 +29,7 @@ namespace SLOT_1
             {'0', 250},
         };
 
-        //объявление слота в виде матрицы равной длины
-        public static char[,] slot = new char[Const.length, Const.length];
-
-
-        //рандомное заполнения слота в виде матрицы char
+        //рандомное заполнения слота
         public static char[,] random_fill(char[,] slot)
         {
             for (int i = 0; i < Const.length; i++)
@@ -43,23 +42,7 @@ namespace SLOT_1
             return slot;
         }
 
-        //красивый вывод (ТОЛЬКО!) слота 
-        public static void beaut_print(char[,] slot)
-        {
-            Console.WriteLine("-----");
-            for (int i = 0; i < Const.length; i++)
-            {
-                Console.Write("|");
-                for (int j = 0; j < Const.length; j++)
-                {
-                    Console.Write(slot[i, j]);
-                }
-                Console.WriteLine("|");
-            }
-            Console.WriteLine("-----");
-        }
-
-        //задаются все играющие комбинации 
+        //все играющие комбинации 
         public static char[] get_win_set(char[,] slot)
         {
 
@@ -107,27 +90,6 @@ namespace SLOT_1
             return balance;
         }
 
-        //вывод инфо о совершённом спине
-        public static void info_about_spin(int win, char[] arr_of_lines, int balance, char[,] slot, int bet)
-        {
-            beaut_print(slot);
-            if (win != 0)
-            {
-                Console.WriteLine($"поздравляем: вы выиграли монет {win}, ваш баланс {balance + win}, ставка: {bet}");
-                for (int i = 0; i < arr_of_lines.Length; i++)
-                {
-                    if (arr_of_lines[i] != 0)
-                    {
-                        Console.WriteLine("сыграла  линия: {0}", i + 1);
-                    }
-                }
-            }
-            else
-            {
-                Console.WriteLine($"сожалеем, ваша ставка не сыграла, попробуйте ещё раз, ваш баланс: {balance - bet}, ставка: {bet}");
-            }
-        }
-
         //авто-запуск слота при заданных: баланс, ставка, кол-во спинов, возвращает баланс
         public static int make_full_auto_spin(int balance, int bet, int coint_spins)
         {
@@ -148,10 +110,10 @@ namespace SLOT_1
                 Console.WriteLine($"произошёл {i + 1}-ый спин");
 
 
-                info_about_spin(win, get_win_set(slot), balance, slot, bet);
+                Printer.info_about_spin(win, get_win_set(slot), balance, slot, bet);
 
                 balance = give_win(bet, win, balance);
-                Console.WriteLine($"номер спина: {Hashcode.hash_code(slot)}");
+                Console.WriteLine($"уникальный код спина: {Hashcode.hash_code(slot)}");
                 Console.WriteLine();
             }
 
@@ -161,7 +123,7 @@ namespace SLOT_1
         //авто-запуск слота обернутый в несколько сессий, возвращает результат игр
         public static int make_full_auto_spin(int balance, int bet, int coint_spins, int count_session)
         {
-            //баланс задается на 1 сессию
+            //баланс задаётся на каждую сессию и суммируется
             int result = 0;
             int prev_balance = balance;
             for (int i = 0; i < count_session; i++)
@@ -176,7 +138,7 @@ namespace SLOT_1
         {
             Game.game();
 
-            Console.ReadLine();
+            Console.ReadKey();          
         }
     }
 }
