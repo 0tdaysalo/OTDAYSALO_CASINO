@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{BC4B5ABC-E2D7-46F4-9CA2-1571A3F430A4}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>SLOT_1_optimize_version</RootNamespace>
-    <AssemblyName>SLOT_1_optimize_version</AssemblyName>
+    <RootNamespace>SLOT_1</RootNamespace>
+    <AssemblyName>SLOT_1</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Const.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="Slot.cs" />
     <Compile Include="Utils\Hashcode.cs" />
     <Compile Include="Printer.cs" />
     <Compile Include="Program.cs" />

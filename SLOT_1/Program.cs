@@ -1,45 +1,10 @@
 ﻿using System;
 
-
 namespace SLOT_1
 {
     public static class Program
     {
         public static readonly Random rand = new Random();
-
-        //объявление singleton слота
-        public static char[,] slot = new char[Const.length, Const.length];
-
-        //рандомное заполнения слота
-        public static char[,] random_fill(char[,] slot)
-        {
-            for (int i = 0; i < Const.length; i++)
-            {
-                for (int j = 0; j < Const.length; j++)
-                {
-                    slot[i, j] = Const.array_symbols[rand.Next(0, Const.array_symbols.Length)];
-                }
-            }
-            return slot;
-        }
-
-        //все играющие комбинации 
-        public static char[] get_win_set(char[,] slot)
-        {
-            //в слоте 5 линий: 3 по строкам, 2 по диагоналям
-            char[] arr_of_lines = new char[Const.count_lines];
-            arr_of_lines[0] = ((slot[1, 0] == slot[1, 1]) && (slot[1, 1] == slot[1, 2])) ? slot[1, 0] : (char)0;
-
-            arr_of_lines[1] = ((slot[0, 0] == slot[0, 1]) && (slot[0, 1] == slot[0, 2])) ? slot[0, 0] : (char)0;
-
-            arr_of_lines[2] = ((slot[2, 0] == slot[2, 1]) && (slot[2, 1] == slot[2, 2])) ? slot[2, 0] : (char)0;
-
-            arr_of_lines[3] = ((slot[0, 0] == slot[1, 1]) && (slot[1, 1] == slot[2, 2])) ? slot[0, 0] : (char)0;
-
-            arr_of_lines[4] = ((slot[0, 2] == slot[1, 1]) && (slot[1, 1] == slot[2, 0])) ? slot[0, 2] : (char)0;
-
-            return arr_of_lines;
-        }
 
         //подсчет выплат
         public static int pay_out(int bet, char[] arr_of_lines)
@@ -82,18 +47,18 @@ namespace SLOT_1
                     break;
 
                 }
-                random_fill(slot);
+                Slot.random_fill();
 
 
-                int win = pay_out(bet, get_win_set(slot));
+                int win = pay_out(bet, Slot.get_win_set());
                 //вывод инфо о слоте, ставке, победе, проигрыше, играющей линии
                 Console.WriteLine($"произошёл {i + 1}-ый спин");
 
 
-                Printer.info_about_spin(win, get_win_set(slot), balance, slot, bet);
+                Printer.info_about_spin(win, Slot.get_win_set(), balance, Slot.slot, bet);
 
                 balance = give_win(bet, win, balance);
-                Console.WriteLine($"уникальный код спина: {Hashcode.hash_code(slot)}");
+                Console.WriteLine($"уникальный код спина: {Hashcode.hash_code(Slot.slot)}");
                 Console.WriteLine();
             }
 

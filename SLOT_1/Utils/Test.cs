@@ -27,7 +27,7 @@ namespace SLOT_1
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            
+
             T result = func();
 
             stopwatch.Stop();
@@ -38,7 +38,7 @@ namespace SLOT_1
 
         //подсчет среднего возврата от ставки
         public static float roi(int balance, int bet, int count)
-        {   
+        {
             //учитывается баланс при определенной ставке (10 * n * count) раз
             //теоретическая возврат в сумме средний за 10 раз 
             float teor_roi = 0;
@@ -66,8 +66,8 @@ namespace SLOT_1
             while (balance > bet)
             {
                 count++;
-                Program.random_fill(Program.slot);
-                int win = Program.pay_out(bet, Program.get_win_set(Program.slot));
+                Slot.random_fill();
+                int win = Program.pay_out(bet, Slot.get_win_set());
                 balance = Program.give_win(bet, win, balance);
             }
             return count;
@@ -85,9 +85,9 @@ namespace SLOT_1
                     break;
                 }
 
-                Program.random_fill(Program.slot);
+                Slot.random_fill();
 
-                int win = Program.pay_out(bet, Program.get_win_set(Program.slot));
+                int win = Program.pay_out(bet, Slot.get_win_set());
 
                 balance = Program.give_win(bet, win, balance);
             }

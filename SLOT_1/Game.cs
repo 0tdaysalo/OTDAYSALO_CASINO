@@ -5,7 +5,7 @@ namespace SLOT_1
 {
     public static class Game
     {
-        //измененная функция make_full_auto_spin для game();
+        //измененная функция make_spin для game();
         public static int make_spin_game(int balance, int bet, int n)
         {
             if (balance < bet)
@@ -15,10 +15,10 @@ namespace SLOT_1
             }
             else
             {
-                Program.random_fill(Program.slot);
-                int win = Program.pay_out(bet, Program.get_win_set(Program.slot));
+                Slot.random_fill();
+                int win = Program.pay_out(bet, Slot.get_win_set());
                 Console.WriteLine($"произошёл {n}-ый спин");
-                Printer.info_about_spin(win, Program.get_win_set(Program.slot), balance, Program.slot, bet);
+                Printer.info_about_spin(win, Slot.get_win_set(), balance, Slot.slot, bet);
                 balance = Program.give_win(bet, win, balance);
             }
             return balance;
@@ -34,8 +34,8 @@ namespace SLOT_1
             }
             else
             {
-                Program.random_fill(Program.slot);
-                int win = Program.pay_out(bet, Program.get_win_set(Program.slot));
+                Slot.random_fill();
+                int win = Program.pay_out(bet, Slot.get_win_set());
                 tot_win += win;
             }
             return tot_win;
@@ -64,30 +64,30 @@ namespace SLOT_1
             Console.WriteLine("-----");
             Console.WriteLine("введите НАЧАТЬ, чтобы начать играть");
             Console.WriteLine("перед тем как начать играть, обязательно обратитесь к правилам");
-            Console.WriteLine("для того чтобы обратиться к правилам введите rule");
+            Console.WriteLine("для того чтобы обратиться к правилам введите ПРАВИЛА");
 
 
             string user_input_1 = Console.ReadLine();
             if (user_input_1 == "НАЧАТЬ")
             {
-            cont_1: { }
+            input_dep: { }
                 Console.Clear();
                 Console.WriteLine("введите сумму вашего депозита:");
                 if (!Int32.TryParse(Console.ReadLine(), out int dep))
                 {
                     Console.WriteLine("некорректный ввод");
-                    goto cont_1;
+                    goto input_dep;
                 }
                 Console.Clear();
 
 
-            cont_2: { }
+            input_bet: { }
                 Console.Clear();
                 Console.WriteLine("введите сумму вашей ставки:");
                 if (!Int32.TryParse(Console.ReadLine(), out int bet))
                 {
                     Console.WriteLine("некорректный ввод");
-                    goto cont_2;
+                    goto input_bet;
                 }
                 Console.Clear();
 
@@ -146,7 +146,8 @@ namespace SLOT_1
                     {
                         total_bal = dep;
                         Console.Clear();
-                        Console.WriteLine($"вы совершили депозитов на сумму: {total_dep}");
+                        Console.WriteLine($"вы совершили:");
+                        Console.WriteLine($"депозитов на сумму: {total_dep}");
                         Console.WriteLine($"{count_spins_game} спин(-ов)(-а) на сумму: {total_bet}");
                         Console.WriteLine($"суммарно выиграли {total_win}");
                         Console.WriteLine($"ваш баланс после выхода составляет {total_bal} это {((float)total_bal / total_dep) * 100}% от вашего(-их) депозита(-ов)");
@@ -157,7 +158,7 @@ namespace SLOT_1
                 }
             }
 
-            else if (user_input_1 == "rule")
+            else if (user_input_1 == "ПРАВИЛА")
             {
                 Console.Clear();
                 Console.WriteLine($"ПРАВИЛА SLOT_1:");
@@ -171,15 +172,15 @@ namespace SLOT_1
                 Console.WriteLine($"вы выигрываете не сумму, а увеличение ставки на определенный множитель");
                 Console.WriteLine($"в игре {Const.count_lines} играющих линий, 3 горизонтальных и 2 по диагонали");
                 Console.WriteLine($"линия считается сыгравшей если в ней имеется 3 одинаковых символа");
-                foreach (var win in Const.array_symbols_dic)
+                foreach (var symbol in Const.array_symbols_dic)
                 {
-                    Console.WriteLine($"символ {win.Key} увеличивает ставку в {win.Value} раз");
+                    Console.WriteLine($"символ {symbol.Key} увеличивает ставку в {symbol.Value} раз");
                 }
                 Console.WriteLine($"максимальный выигрыш составляет X{Const.array_symbols_dic.Values.Max() * Const.count_lines} от ставки");
                 Console.WriteLine($"теоретический процент возврата вашего баланса составляет 97,7%");
                 Console.WriteLine($"НИКОГДА НЕ ИГРАЙТЕ В АЗАРТНЫЕ ИГРЫ, А ТЕМ БОЛЕЕ В КАЗИНО, ИНАЧЕ ВЫ ОСТАНЕТЕСЬ В МИНУСЕ");
-                Console.WriteLine($"\nнажмите Enter, чтобы выйти");
-                Console.ReadLine();
+                Console.WriteLine($"\nнажмите на любую клавишу, чтобы выйти");
+                Console.ReadKey();
                 goto start;
             }
             else

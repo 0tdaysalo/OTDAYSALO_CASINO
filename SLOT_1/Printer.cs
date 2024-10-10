@@ -26,7 +26,8 @@ namespace SLOT_1
             beaut_print(slot);
             if (win != 0)
             {
-                Console.WriteLine($"поздравляем: вы выиграли монет {win}, ваш баланс {balance + win}, ставка: {bet}");
+                Console.WriteLine($"поздравляем: вы выиграли монет {win}");
+                Console.WriteLine($"баланс: {balance + win}, ставка: {bet}");
                 for (int i = 0; i < arr_of_lines.Length; i++)
                 {
                     if (arr_of_lines[i] != 0)
@@ -37,7 +38,8 @@ namespace SLOT_1
             }
             else
             {
-                Console.WriteLine($"сожалеем, ваша ставка не сыграла, попробуйте ещё раз, ваш баланс: {balance - bet}, ставка: {bet}");
+                Console.WriteLine($"сожалеем, ваша ставка не сыграла, попробуйте ещё раз");
+                Console.WriteLine($"баланс: {balance - bet}, ставка: {bet}");
             }
         }
     }
