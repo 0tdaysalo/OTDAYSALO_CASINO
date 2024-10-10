@@ -33,13 +33,16 @@ namespace SLOT_1
         //воспроизведение спина по хэш-коду
         public static void hash_uncode(string code)
         {
-            //общее
             string[] uncode_string = code.Split('_');
             char[,] slot_func = new char[Const.length, Const.length];
 
             //первая часть
-            string decode_str_rev = add_confus((uncode_string[0]));//переворачиваем строку
-            string[] decode_str_rev_arr = new string[decode_str_rev.Length];//перевернутая последовательнсть в виде массива(заполненная ниже)
+
+            //переворачиваем строку
+            string decode_str_rev = add_confus((uncode_string[0]));
+
+            //перевернутая последовательнсть в виде массива(заполненная ниже)
+            string[] decode_str_rev_arr = new string[decode_str_rev.Length];
             for (int i = 0; i < decode_str_rev.Length; i++)
             {
                 decode_str_rev_arr[i] = decode_str_rev[i].ToString();
@@ -48,8 +51,6 @@ namespace SLOT_1
                     decode_str_rev_arr[i] = 10.ToString();
                 }
             }
-
-
 
             slot_func[0, 0] = Const.array_symbols[Convert.ToInt32(decode_str_rev_arr[0])];
             slot_func[0, 1] = Const.array_symbols[Convert.ToInt32(decode_str_rev_arr[1])];
@@ -62,20 +63,23 @@ namespace SLOT_1
             slot_func[2, 0] = Const.array_symbols[Convert.ToInt32(decode_str_rev_arr[6])];
             slot_func[2, 1] = Const.array_symbols[Convert.ToInt32(decode_str_rev_arr[7])];
             slot_func[2, 2] = Const.array_symbols[Convert.ToInt32(decode_str_rev_arr[8])];
-            Console.WriteLine();
+
             //вторая часть
+
             long date = (long)Convert.ToUInt64((uncode_string[1]));
-            DateTime unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            long unixTimeStampInTicks = date * TimeSpan.TicksPerMillisecond;
-            var qwerty = new DateTime(unixEpoch.Ticks + unixTimeStampInTicks, DateTimeKind.Utc);
+            DateTime unix_epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            long time_stamp_tick = date * TimeSpan.TicksPerMillisecond;
+            var date_time = new DateTime(unix_epoch.Ticks + time_stamp_tick, DateTimeKind.Utc);
+
+            //вывод
+            Console.WriteLine();
             Console.WriteLine($"по коду вашего спина равного: {code} найдена комбинация");
             Printer.beaut_print(slot_func);
-
-            Console.WriteLine($"которая была сделана: {qwerty} GMT+0");
+            Console.WriteLine($"которая была сделана: {date_time} GMT+0");
 
         }
 
-        //перворот строки
+        //переворот строки
         public static string add_confus(string str)
         {
             //вспомогательная функция для hash_code и hash_uncode

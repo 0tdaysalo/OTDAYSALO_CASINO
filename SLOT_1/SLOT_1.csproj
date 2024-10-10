@@ -43,11 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Const.cs" />
+    <Compile Include="Lib\Auto.cs" />
+    <Compile Include="Lib\Const.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="Slot.cs" />
+    <Compile Include="Lib\Pay.cs" />
+    <Compile Include="Lib\Slot.cs" />
     <Compile Include="Utils\Hashcode.cs" />
-    <Compile Include="Printer.cs" />
+    <Compile Include="Lib\Printer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\Test.cs" />

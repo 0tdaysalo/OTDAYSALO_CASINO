@@ -1,7 +1,7 @@
 ﻿namespace SLOT_1
 {
     public static class Slot
-    {   
+    {
         //слот
         public static char[,] slot = new char[Const.length, Const.length];
 

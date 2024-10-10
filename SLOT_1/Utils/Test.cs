@@ -67,8 +67,8 @@ namespace SLOT_1
             {
                 count++;
                 Slot.random_fill();
-                int win = Program.pay_out(bet, Slot.get_win_set());
-                balance = Program.give_win(bet, win, balance);
+                int win = Pay.pay_out(bet, Slot.get_win_set());
+                balance = Pay.give_win(bet, win, balance);
             }
             return count;
         }
@@ -87,9 +87,9 @@ namespace SLOT_1
 
                 Slot.random_fill();
 
-                int win = Program.pay_out(bet, Slot.get_win_set());
+                int win = Pay.pay_out(bet, Slot.get_win_set());
 
-                balance = Program.give_win(bet, win, balance);
+                balance = Pay.give_win(bet, win, balance);
             }
 
             return balance;
