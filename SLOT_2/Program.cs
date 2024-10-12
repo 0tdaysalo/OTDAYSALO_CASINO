@@ -237,8 +237,6 @@ namespace SLOT_2
             return slot_not_play_droped;
         }
      
-        
-
         public static void Main()
         {
             Auto.slot_after_one_spin(slot);

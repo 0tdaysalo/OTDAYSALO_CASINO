@@ -71,7 +71,7 @@ namespace SLOT_1
             //вывод
             Console.WriteLine();
             Console.WriteLine($"по коду вашего спина равного: {code} найдена комбинация");
-            Printer.beaut_print(slot_func);
+            Printer.slot_print(slot_func);
             Console.WriteLine($"которая была сделана: {date_time} GMT+0");
 
         }

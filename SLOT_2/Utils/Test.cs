@@ -27,7 +27,7 @@ namespace SLOT_2
                 if (check >= 3)
                 {
                     scatter++;
-                    Program.good_beaut_print(Program.slot);
+                    Printer.beaut_print(Program.slot);
                 }
 
             }
@@ -51,7 +51,7 @@ namespace SLOT_2
             if (count_test >= 3)
             {
                 Console.WriteLine(">=3,тести");
-                Program.good_beaut_print(slot_test);
+                Printer.beaut_print(slot_test);
             }
 
         }
@@ -73,7 +73,7 @@ namespace SLOT_2
             if (count_test >= 1)
             {
                 Console.WriteLine("дырка,блять");
-                Program.good_beaut_print(slot_test);
+                Printer.beaut_print(slot_test);
             }
 
         }
