@@ -5,60 +5,12 @@ namespace SLOT_2
 {
     public static class Program
     {
-        public static readonly Random rand = new Random();
-
-        //слот
+       //слот
         public static char[,] slot = new char[Const.length, Const.length];
 
         //эточе
         public static List<MatrixWalk> list_of_games_symbols = new List<MatrixWalk>();
-
-        //рандомное заполнения слота
-        public static char[,] random_fill(char[,] slot_fill)
-        {
-            //основной цикл заполнения
-            for (int j = 0; j < Const.length; j++)
-            {
-                int scatter_check = 0;
-                bool scatter_check_bool = true;
-
-                for (int i = 0; i < Const.length; i++)
-                {
-                    int random = rand.Next(0, 700);
-                    if ((690 < random) && (random <= 700) && scatter_check_bool)
-                    {
-                        scatter_check++;
-                        scatter_check_bool = false;
-                        slot_fill[j, i] = 'S';
-                    }
-
-                    if (scatter_check <= 1)
-                    {
-                        if ((0 <= random) && (random <= 70)) slot_fill[j, i] = '0';
-                        if ((70 < random) && (random <= 150)) slot_fill[j, i] = '1';
-                        if ((150 < random) && (random <= 250)) slot_fill[j, i] = '2';
-                        if ((250 < random) && (random <= 350)) slot_fill[j, i] = '3';
-                        if ((350 < random) && (random <= 450)) slot_fill[j, i] = '4';
-                        if ((450 < random) && (random <= 595)) slot_fill[j, i] = '5';
-                        if ((595 < random) && (random <= 690)) slot_fill[j, i] = '6';
-                    }
-
-                    else if ((690 < random) && (random <= 700) && scatter_check_bool)
-                    {
-                        scatter_check++;
-                        scatter_check_bool = false;
-                        slot_fill[j, i] = 'S';
-                    }
-
-                    ////штука чтобы посмотреть как поэтапно заполняется матрица
-                    //Printer.beaut_print(slot_fill);
-                    //Console.WriteLine($"заполнено: {slot_fill[j, i]}");
-                }
-            }
-
-            return slot_fill;
-        }
-
+ 
         //проход по областям играющих символов
         public static bool going_symbols(char[,] slot_going)
         {
@@ -207,7 +159,7 @@ namespace SLOT_2
                             }
                         }
 
-                        int random = rand.Next(0, 700);
+                        int random = Const.rand.Next(0, 700);
                         if (checker)
                         {
                             if ((0 <= random) && (random <= 70)) slot_not_play_droped[k, j] = '0';

@@ -1,10 +1,42 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 
 namespace SLOT_1
 {
     public static class Printer
     {
+        private static ConsoleColor symb_color(char symbol)
+        {
+            switch (symbol)
+            {
+                case '1':
+                    return ConsoleColor.Yellow;
+                case 'J':
+                    return ConsoleColor.Cyan;
+                case 'Q':
+                    return ConsoleColor.Green;
+                case 'K':
+                    return ConsoleColor.Blue;
+                case 'A':
+                    return ConsoleColor.Magenta;
+                case '@':
+                    return ConsoleColor.Red;
+                case '#':
+                    return ConsoleColor.DarkCyan;
+                case '$':
+                    return ConsoleColor.White;
+                case '%':
+                    return ConsoleColor.DarkBlue;
+                case '&':
+                    return ConsoleColor.DarkMagenta;
+                case '0':
+                    return ConsoleColor.DarkMagenta;
+                default:
+                    return ConsoleColor.DarkYellow;
+            }
+        }
+
         //вывод Slot.slot 
         public static void slot_print()
         {
@@ -14,8 +46,10 @@ namespace SLOT_1
                 Console.Write("|");
                 for (int j = 0; j < Const.length; j++)
                 {
+                    Console.ForegroundColor = symb_color(Slot.slot[i, j]);
                     Console.Write(Slot.slot[i, j]);
                 }
+                Console.ResetColor(); 
                 Console.WriteLine("|");
             }
             Console.WriteLine("-----");

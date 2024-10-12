@@ -12,7 +12,7 @@ namespace SLOT_2
             for (int z = 0; z < count; z++)
             {
                 int check = 0;
-                Program.random_fill(Program.slot);
+                Const.random_fill(Program.slot);
 
                 for (int i = 0; i < Const.length; i++)
                 {

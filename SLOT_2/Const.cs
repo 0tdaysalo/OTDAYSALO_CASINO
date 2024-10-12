@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SLOT_2
 {
@@ -152,5 +153,53 @@ namespace SLOT_2
             {14, 10.00},
             {15, 20.00},
         };
+
+        //рандомное заполнения слота
+        public static char[,] random_fill(char[,] slot_fill)
+        {
+            //основной цикл заполнения
+            for (int j = 0; j < Const.length; j++)
+            {
+                int scatter_check = 0;
+                bool scatter_check_bool = true;
+
+                for (int i = 0; i < Const.length; i++)
+                {
+                    int random = rand.Next(0, 700);
+                    if ((690 < random) && (random <= 700) && scatter_check_bool)
+                    {
+                        scatter_check++;
+                        scatter_check_bool = false;
+                        slot_fill[j, i] = 'S';
+                    }
+
+                    if (scatter_check <= 1)
+                    {
+                        if ((0 <= random) && (random <= 70)) slot_fill[j, i] = '0';
+                        if ((70 < random) && (random <= 150)) slot_fill[j, i] = '1';
+                        if ((150 < random) && (random <= 250)) slot_fill[j, i] = '2';
+                        if ((250 < random) && (random <= 350)) slot_fill[j, i] = '3';
+                        if ((350 < random) && (random <= 450)) slot_fill[j, i] = '4';
+                        if ((450 < random) && (random <= 595)) slot_fill[j, i] = '5';
+                        if ((595 < random) && (random <= 690)) slot_fill[j, i] = '6';
+                    }
+
+                    else if ((690 < random) && (random <= 700) && scatter_check_bool)
+                    {
+                        scatter_check++;
+                        scatter_check_bool = false;
+                        slot_fill[j, i] = 'S';
+                    }
+
+                    ////штука чтобы посмотреть как поэтапно заполняется матрица
+                    //Printer.beaut_print(slot_fill);
+                    //Console.WriteLine($"заполнено: {slot_fill[j, i]}");
+                }
+            }
+
+            return slot_fill;
+        }
+
+        public static readonly Random rand = new Random();
     }
 }

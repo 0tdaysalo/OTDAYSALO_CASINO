@@ -6,7 +6,7 @@ namespace SLOT_2
     {
         public static char[,] slot_after_one_spin(char[,] slot_main)
         {
-            Program.random_fill(slot_main);
+            Const.random_fill(slot_main);
             bool check = Program.going_symbols(slot_main);
 
             Console.WriteLine("просто слот:");
