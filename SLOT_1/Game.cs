@@ -6,11 +6,12 @@ namespace SLOT_1
     public static class Game
     {
         //измененная функция make_spin для game();
-        public static int make_spin_game(int balance, int bet, int n)
+        private static int make_spin_game(int balance, int bet, int n)
         {
             if (balance < bet)
             {
                 Console.WriteLine("недостаточно средств! игра приостановлена");
+                Console.WriteLine($"баланс: {balance}, ставка: {bet}");
                 Console.WriteLine();
             }
             else
@@ -25,7 +26,7 @@ namespace SLOT_1
         }
 
         //получение итогового выигрыша в game()
-        public static int game_total_win(int balance, int bet)
+        private static int game_total_win(int balance, int bet)
         {
             int tot_win = 0;
             if (balance < bet)
@@ -57,10 +58,11 @@ namespace SLOT_1
             Console.WriteLine("введите СТАРТ, чтобы запустить игру");
             Console.WriteLine("введите ПРАВИЛА, чтобы отобразить их");
             Console.WriteLine("введите ВЫХОД, чтобы покинуть игру");
+            Console.WriteLine("введите ПРОСМОТР, чтобы отобразить сыгровку символов");
 
-            string user_input_1 = Console.ReadLine();
+            string user_input_start = Console.ReadLine();
 
-            if (user_input_1 == "СТАРТ")
+            if (user_input_start == "СТАРТ")
             {
             input_dep: { }
                 Console.Clear();
@@ -85,7 +87,7 @@ namespace SLOT_1
 
                 if (bet <= 0 || dep <= 0)
                 {
-                    Console.WriteLine("неверно");
+                    Console.WriteLine("некорректный ввод");
                     Console.WriteLine($"с какой целью вы вводите {bet} и {dep}?");
                     return;
                 }
@@ -103,8 +105,9 @@ namespace SLOT_1
                     count_spins_game++;
                     dep = make_spin_game(dep, bet, count_spins_game);
 
-                    string user_input_2 = Console.ReadLine();
-                    if (user_input_2 == "ДЕП")
+                    string user_input_game = Console.ReadLine();
+
+                    if (user_input_game == "ДЕП")
                     {
                     cont_change_dep: { }
                         Console.WriteLine("введите сумму");
@@ -121,9 +124,11 @@ namespace SLOT_1
                             Console.WriteLine($"суммарно вы пополнили на {total_dep}");
                             Console.WriteLine("нажмите любую клавишу, чтобы продолжить");
                             Console.ReadKey();
+                            Console.WriteLine();
                         }
                     }
-                    else if (user_input_2 == "БЕТ")
+
+                    else if (user_input_game == "БЕТ")
                     {
                     cont_change_bet: { }
                         Console.WriteLine("введите новую сумму ставки");
@@ -132,6 +137,7 @@ namespace SLOT_1
                             Console.WriteLine($"успешная смена баланса, теперь ваша ставка {bet}");
                             Console.WriteLine("нажмите любую клавишу, чтобы продолжить");
                             Console.ReadKey();
+                            Console.WriteLine();
                         }
                         else
                         {
@@ -139,7 +145,17 @@ namespace SLOT_1
                             goto cont_change_bet;
                         }
                     }
-                    else if (user_input_2 == "ВЫХОД")
+
+                    else if (user_input_game == "ПРОСМОТР")
+                    {
+                        Console.WriteLine("введите ваш код сыгровки:");
+                        Hashcode.uncode(Console.ReadLine());
+                        Console.WriteLine("нажмите любую клавишу, чтобы продолжить");
+                        Console.ReadKey();
+                        Console.WriteLine();
+                    }
+
+                    else if (user_input_game == "ВЫХОД")
                     {
                         total_bal = dep;
                         Console.Clear();
@@ -150,12 +166,13 @@ namespace SLOT_1
                         Console.WriteLine($"теперь ваш баланс после выхода составляет {total_bal} это {((float)total_bal / total_dep) * 100}% от вашего(-их) депозита(-ов)");
                         return;
                     }
+
                     total_bet += bet;
                     total_win += game_total_win(dep, bet);
                 }
             }
 
-            else if (user_input_1 == "ПРАВИЛА")
+            else if (user_input_start == "ПРАВИЛА")
             {
                 Console.Clear();
                 Console.WriteLine("ПРАВИЛА SLOT_1:");
@@ -175,6 +192,7 @@ namespace SLOT_1
 
                 Console.WriteLine();
 
+                Console.WriteLine("чтобы играть жмите Enter");
                 Console.WriteLine("если вы желаете внести депзоит, введите ДЕП после начала игры");
                 Console.WriteLine("если вы желаете изменить ставку, введите БЕТ после начала игры");
                 Console.WriteLine("если вы желаете завершить игру введите ВЫХОД после начала игры");
@@ -188,10 +206,16 @@ namespace SLOT_1
                 goto start;
             }
 
-            else if (user_input_1 == "ВЫХОД")
+            else if (user_input_start == "ВЫХОД")
             {
                 Console.Clear();
                 return;
+            }
+
+            else if(user_input_start == "ПРОСМОТР")
+            {
+                Console.WriteLine("введите ваш код сыгровки:");
+                Hashcode.uncode(Console.ReadLine());
             }
 
             else

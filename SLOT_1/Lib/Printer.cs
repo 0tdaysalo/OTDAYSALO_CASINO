@@ -2,7 +2,7 @@
 
 namespace SLOT_1
 {
-    public class Printer
+    public static class Printer
     {
         //вывод Slot.slot 
         public static void beaut_print()
@@ -73,7 +73,7 @@ namespace SLOT_1
                 Console.WriteLine($"сожалеем, ставка не сыграла, попробуйте ещё раз");
                 Console.WriteLine($"баланс: {balance - bet}, ставка: {bet}");
             }
-            Console.WriteLine($"Hashcode спина: {Hashcode.hash_code(Slot.slot)}");
+            Console.WriteLine($"Hashcode спина: {Hashcode.code(Slot.slot)}");
         }
 
 

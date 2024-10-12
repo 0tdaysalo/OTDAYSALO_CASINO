@@ -7,7 +7,7 @@ namespace SLOT_2
     {
         public static readonly Random rand = new Random();
 
-        //объявление singleton слота
+        //слот
         public static char[,] slot = new char[Const.length, Const.length];
 
         //эточе
@@ -237,44 +237,11 @@ namespace SLOT_2
             return slot_not_play_droped;
         }
      
-        public static char[,] slot_after_one_spin(char[,] slot_main)
-        {
-            random_fill(slot_main);
-            bool check = going_symbols(slot_main);
-
-            Console.WriteLine("просто слот:");
-            Printer.beaut_print(slot_main);
-
-            var slot_while = (char[,])slot_main.Clone();
-
-            while (check)
-            {
-                Console.WriteLine("символы сыграли");
-                var slot_not_play = stay_not_play(slot_while);
-                Printer.beaut_print(slot_not_play);
-                //Thread.Sleep(500);
-
-                Console.WriteLine("символы упали");
-                var slot_drop = drop_symbols(slot_not_play);
-                Printer.beaut_print(slot_drop);
-                //Thread.Sleep(500);
-
-                Console.WriteLine("слот заполнился");
-                slot_while = feel_after_drop(slot_drop);
-                Printer.beaut_print(slot_while);
-                //Thread.Sleep(500);
-
-
-
-                check = going_symbols(slot_while);
-            }
-
-            return slot_while;
-        }
+        
 
         public static void Main()
         {
-            slot_after_one_spin(slot);
+            Auto.slot_after_one_spin(slot);
 
             Console.WriteLine("просто слот каким был изначально:");
             Printer.beaut_print(slot);

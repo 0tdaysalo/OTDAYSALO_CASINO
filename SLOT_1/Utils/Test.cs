@@ -39,6 +39,13 @@ namespace SLOT_1
         //подсчет среднего возврата от ставки
         public static float roi(int balance, int bet, int count)
         {
+            //функция нужна для случая смены:
+            // - комбинаций
+            // - выплат символов
+            // - длины слота
+            //чтобы оценить выгодность внесённых изменений, потому что казино всегда должно быть в плюсе
+
+
             //учитывается баланс при определенной ставке (10 * n * count) раз
             //теоретическая возврат в сумме средний за 10 раз 
             float teor_roi = 0;
@@ -48,7 +55,7 @@ namespace SLOT_1
                 int n = 1_000_000, sum = 0;
                 for (int j = 0; j < n; j++)
                 {
-                    sum += make_full_auto_spin_without_info(balance, bet, count);
+                    sum += make_auto_spin_without_info(balance, bet, count);
                 }
                 //теоретическая возврат в сумме
                 float teor_ret = (float)sum / n;                                  //в процентах
@@ -58,12 +65,12 @@ namespace SLOT_1
             return teor_roi / 10;
         }
 
-        //кол-во спинов, пока balance < bet или balance = 0
+        //кол-во спинов, пока balance >= bet 
         public static int check_count_spins(int balance, int bet)
         {
             //полученный выигрыш учитывается
             int count = 0;
-            while (balance > bet)
+            while (balance >= bet)
             {
                 count++;
                 Slot.random_fill();
@@ -74,7 +81,7 @@ namespace SLOT_1
         }
 
         //авто-запуск слотов для определенного баланса, без вывода инфо
-        public static int make_full_auto_spin_without_info(int balance, int bet, int n)
+        public static int make_auto_spin_without_info(int balance, int bet, int n)
         {
             for (int i = 0; i < n; i++)
             {

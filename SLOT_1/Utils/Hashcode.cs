@@ -2,10 +2,10 @@
 
 namespace SLOT_1
 {
-    public class Hashcode
+    public static class Hashcode
     {
         //хэширование данных о спине в виде 
-        public static string hash_code(char[,] slot)
+        public static string code(char[,] slot)
         {
             //можно будет воспроизвести спин
             string code = string.Empty;
@@ -31,7 +31,7 @@ namespace SLOT_1
         }
 
         //воспроизведение спина по хэш-коду
-        public static void hash_uncode(string code)
+        public static void uncode(string code)
         {
             string[] uncode_string = code.Split('_');
             char[,] slot_func = new char[Const.length, Const.length];
@@ -52,17 +52,14 @@ namespace SLOT_1
                 }
             }
 
-            slot_func[0, 0] = Const.array_symbols[Convert.ToInt32(decode_str_rev_arr[0])];
-            slot_func[0, 1] = Const.array_symbols[Convert.ToInt32(decode_str_rev_arr[1])];
-            slot_func[0, 2] = Const.array_symbols[Convert.ToInt32(decode_str_rev_arr[2])];
-
-            slot_func[1, 0] = Const.array_symbols[Convert.ToInt32(decode_str_rev_arr[3])];
-            slot_func[1, 1] = Const.array_symbols[Convert.ToInt32(decode_str_rev_arr[4])];
-            slot_func[1, 2] = Const.array_symbols[Convert.ToInt32(decode_str_rev_arr[5])];
-
-            slot_func[2, 0] = Const.array_symbols[Convert.ToInt32(decode_str_rev_arr[6])];
-            slot_func[2, 1] = Const.array_symbols[Convert.ToInt32(decode_str_rev_arr[7])];
-            slot_func[2, 2] = Const.array_symbols[Convert.ToInt32(decode_str_rev_arr[8])];
+            for (int i = 0; i < Const.length; i++) 
+            {
+                for (int j = 0; j < Const.length; j++)
+                {
+                    int index = (i*Const.length) + j; 
+                    slot_func[i, j] = Const.array_symbols[Convert.ToInt32(decode_str_rev_arr[index])];
+                }
+            }
 
             //вторая часть
 
@@ -80,7 +77,7 @@ namespace SLOT_1
         }
 
         //переворот строки
-        public static string add_confus(string str)
+        private static string add_confus(string str)
         {
             //вспомогательная функция для hash_code и hash_uncode
             char[] arr = str.ToCharArray();
