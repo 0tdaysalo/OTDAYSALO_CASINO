@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Threading;
 
 namespace SLOT_1
 {
@@ -41,32 +40,38 @@ namespace SLOT_1
         public static void slot_print()
         {
             Console.WriteLine("-----");
-            for (int i = 0; i < Const.length; i++)
+            for (uint i = 0; i < Const.length; i++)
             {
                 Console.Write("|");
-                for (int j = 0; j < Const.length; j++)
+                for (uint j = 0; j < Const.length; j++)
                 {
                     Console.ForegroundColor = symb_color(Slot.slot[i, j]);
                     Console.Write(Slot.slot[i, j]);
                 }
-                Console.ResetColor(); 
+                Console.ResetColor();
                 Console.WriteLine("|");
             }
             Console.WriteLine("-----");
         }
 
-        //вывод слота с переданными символами
-        public static void slot_print(string symbol)
+        //вывод слота с переданным символом
+        public static void slot_print(char symbol)
         {
             Console.WriteLine("-----");
-            for (int i = 0; i < Const.length; i++)
+            for (uint i = 0; i < Const.length; i++)
             {
+
+
                 Console.Write("|");
-                for (int j = 0; j < Const.length; j++)
+                for (uint j = 0; j < Const.length; j++)
                 {
+                    Console.ForegroundColor = symb_color(symbol);
                     Console.Write(symbol);
                 }
+                Console.ResetColor();
                 Console.WriteLine("|");
+
+
             }
             Console.WriteLine("-----");
         }
@@ -75,10 +80,10 @@ namespace SLOT_1
         public static void slot_print(char[,] slot)
         {
             Console.WriteLine("-----");
-            for (int i = 0; i < Const.length; i++)
+            for (uint i = 0; i < Const.length; i++)
             {
                 Console.Write("|");
-                for (int j = 0; j < Const.length; j++)
+                for (uint j = 0; j < Const.length; j++)
                 {
                     Console.Write(slot[i, j]);
                 }
@@ -88,14 +93,14 @@ namespace SLOT_1
         }
 
         //вывод инфо о совершённом спине
-        public static void info_about_spin(int win, char[] arr_of_lines, int balance_after_spin, int bet)
+        public static void info_about_spin(uint win, char[] arr_of_lines, uint balance_after_spin, uint bet)
         {
             slot_print();
             if (win != 0)
             {
                 Console.WriteLine($"поздравляем, вы выиграли монет {win}");
                 Console.WriteLine($"баланс: {balance_after_spin}, ставка: {bet}");
-                for (int i = 0; i < arr_of_lines.Length; i++)
+                for (uint i = 0; i < arr_of_lines.Length; i++)
                 {
                     if (arr_of_lines[i] != 0)
                     {
@@ -109,6 +114,17 @@ namespace SLOT_1
                 Console.WriteLine($"баланс: {balance_after_spin}, ставка: {bet}");
             }
             Console.WriteLine($"Hashcode спина: {Hashcode.code(Slot.slot)}");
+        }
+
+        public static void slot_start()
+        {
+            Console.WriteLine("0TDAYSALO_CASINO, SLOT_1");
+            Printer.slot_print('0');
+            Console.WriteLine("!перед началом обязательно ознакомьтесь с правилами!");
+            Console.WriteLine("введите СТАРТ, чтобы запустить игру");
+            Console.WriteLine("введите ПРАВИЛА, чтобы отобразить их");
+            Console.WriteLine("введите ВЫХОД, чтобы покинуть игру");
+            Console.WriteLine("введите ПРОСМОТР, чтобы отобразить сыгровку символов");
         }
 
         public static void slot_rule()
@@ -140,7 +156,6 @@ namespace SLOT_1
 
             Console.WriteLine("НИКОГДА НЕ ИГРАЙТЕ В АЗАРТНЫЕ ИГРЫ, А ТЕМ БОЛЕЕ В КАЗИНО, ИНАЧЕ ВЫ ОСТАНЕТЕСЬ В МИНУСЕ");
             Console.WriteLine("\nнажмите на любую клавишу, чтобы выйти покинуть раздел правил");
-            Console.ReadKey();
         }
     }
 }

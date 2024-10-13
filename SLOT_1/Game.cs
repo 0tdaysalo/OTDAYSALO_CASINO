@@ -6,13 +6,13 @@ namespace SLOT_1
     {
 
         //получение итогового выигрыша в game()
-        private static int total_win_game(int balance, int bet)
+        private static uint total_win_game(uint balance, uint bet)
         {
-            int tot_win = 0;
+            uint tot_win = 0;
             if (!(balance < bet))
             {
                 Slot.random_fill();
-                int win = Pay.pay_out(bet, Slot.get_win_set());
+                uint win = Pay.pay_out(bet, Slot.get_win_set());
                 tot_win += win;
             }
             return tot_win;
@@ -21,160 +21,143 @@ namespace SLOT_1
         //полноценная консоль-игра (релиз)
         public static void game()
         {
-            int total_dep = 0;
-            int total_bet = 0;
-            int total_win = 0;
-            int total_bal;
+            uint total_dep = 0;
+            uint total_bet = 0;
+            uint total_win = 0;
+            uint total_bal;
 
         start: { }
             Console.Clear();
-            Console.WriteLine("0TDAYSALO_CASINO, SLOT_1");
-            Printer.slot_print("0");
-            Console.WriteLine("!перед началом обязательно ознакомьтесь с правилами!");
-            Console.WriteLine("введите СТАРТ, чтобы запустить игру");
-            Console.WriteLine("введите ПРАВИЛА, чтобы отобразить их");
-            Console.WriteLine("введите ВЫХОД, чтобы покинуть игру");
-            Console.WriteLine("введите ПРОСМОТР, чтобы отобразить сыгровку символов");
+            Printer.slot_start();
 
             string user_input_start = Console.ReadLine();
 
-            if (user_input_start == "СТАРТ")
+            switch (user_input_start)
             {
-            input_dep: { }
-                Console.Clear();
-                Console.WriteLine("введите сумму вашего депозита:");
-                if (!Int32.TryParse(Console.ReadLine(), out int dep))
-                {
-                    Console.WriteLine("некорректный ввод");
-                    goto input_dep;
-                }
-                Console.Clear();
-
-
-            input_bet: { }
-                Console.Clear();
-                Console.WriteLine("введите сумму вашей ставки:");
-                if (!Int32.TryParse(Console.ReadLine(), out int bet))
-                {
-                    Console.WriteLine("некорректный ввод");
-                    goto input_bet;
-                }
-                Console.Clear();
-
-                if (bet <= 0 || dep <= 0)
-                {
-                    Console.WriteLine("некорректный ввод");
-                    Console.WriteLine($"с какой целью вы вводите {bet} и {dep}?");
-                    return;
-                }
-
-
-                Console.WriteLine($"депозит: {dep}, ставка: {bet}, приятной игры!");
-
-                if (Console.ReadLine() == "ВЫХОД")
-                {
-                    goto start;
-                }
-
-                total_bet += bet;
-                total_dep += dep;
-                int count_spins_game = 0;
-
-                while (true)
-                {
-                    count_spins_game++;
-                    dep = Auto.make_spin_game(dep, bet, count_spins_game);
-
-                    string user_input_game = Console.ReadLine();
-
-                    if (user_input_game == "ДЕП")
+                case "СТАРТ":
+                input_dep: { }
+                    Console.Clear();
+                    Console.WriteLine("введите сумму вашего депозита:");
+                    if (!UInt32.TryParse(Console.ReadLine(), out uint dep))
                     {
-                    cont_change_dep: { }
-                        Console.WriteLine("введите сумму");
-                        if (!Int32.TryParse(Console.ReadLine(), out int new_dep))
-                        {
-                            Console.WriteLine("некорректный ввод");
-                            goto cont_change_dep;
-                        }
-                        else
-                        {
-                            dep += new_dep;
-                            total_dep += new_dep;
-                            Console.WriteLine($"успешное пополнение, теперь ваш баланс {dep}");
-                            Console.WriteLine($"суммарно вы пополнили на {total_dep}");
-                            Console.WriteLine("нажмите любую клавишу, чтобы продолжить");
-                            Console.ReadKey();
-                            Console.WriteLine();
-                        }
+                        Console.WriteLine("некорректный ввод");
+                        goto input_dep;
                     }
+                    Console.Clear();
 
-                    else if (user_input_game == "БЕТ")
+
+                input_bet: { }
+                    Console.Clear();
+                    Console.WriteLine("введите сумму вашей ставки:");
+                    if (!UInt32.TryParse(Console.ReadLine(), out uint bet))
                     {
-                    cont_change_bet: { }
-                        Console.WriteLine("введите новую сумму ставки");
-                        if (Int32.TryParse(Console.ReadLine(), out bet))
-                        {
-                            Console.WriteLine($"успешная смена баланса, теперь ваша ставка {bet}");
-                            Console.WriteLine("нажмите любую клавишу, чтобы продолжить");
-                            Console.ReadKey();
-                            Console.WriteLine();
-                        }
-                        else
-                        {
-                            Console.WriteLine("некорректный ввод");
-                            goto cont_change_bet;
-                        }
+                        Console.WriteLine("некорректный ввод");
+                        goto input_bet;
                     }
+                    Console.Clear();
 
-                    else if (user_input_game == "ПРОСМОТР")
+                    if (bet <= 0 || dep <= 0)
                     {
-                        Console.WriteLine("введите ваш код сыгровки:");
-                        Hashcode.uncode(Console.ReadLine());
-                        Console.WriteLine("нажмите любую клавишу, чтобы продолжить");
-                        Console.ReadKey();
-                        Console.WriteLine();
-                    }
-
-                    else if (user_input_game == "ВЫХОД")
-                    {
-                        total_bal = dep;
-                        Console.Clear();
-                        Console.WriteLine("вы совершили:");
-                        Console.WriteLine($"депозитов на сумму: {total_dep}");
-                        Console.WriteLine($"{count_spins_game} спин(-ов)(-а) на сумму: {total_bet}");
-                        Console.WriteLine($"а также, суммарно выиграли {total_win}");
-                        Console.WriteLine($"ваш баланс составляет {total_bal} это {((float)total_bal / total_dep) * 100}% от вашего(-их) депозита(-ов)");
+                        Console.WriteLine("некорректный ввод");
+                        Console.WriteLine($"с какой целью вы вводите {bet} и {dep}?");
                         return;
                     }
 
+
+                    Console.WriteLine($"депозит: {dep}, ставка: {bet}, приятной игры!");
+
+                    if (Console.ReadLine() == "ВЫХОД")
+                    {
+                        goto start;
+                    }
+
                     total_bet += bet;
-                    total_win += total_win_game(dep, bet);
-                }
-            }
+                    total_dep += dep;
+                    uint count_spins_game = 0;
 
-            else if (user_input_start == "ПРАВИЛА")
-            {
-                Console.Clear();
-                Printer.slot_rule();
-                goto start;
-            }
+                    while (true)
+                    {
+                        count_spins_game++;
+                        dep = Auto.make_spin_game(dep, bet, count_spins_game);
 
-            else if (user_input_start == "ВЫХОД")
-            {
-                Console.Clear();
-                return;
-            }
+                        string user_input_game = Console.ReadLine();
+                        switch (user_input_game)
+                        {
+                            case ("ДЕП"):
+                            cont_change_dep: { }
+                                Console.WriteLine();
+                                Console.WriteLine("введите сумму:");
+                                if (UInt32.TryParse(Console.ReadLine(), out uint new_dep))
+                                {
+                                    dep += new_dep;
+                                    total_dep += new_dep;
+                                    Console.WriteLine($"успешное пополнение, теперь ваш баланс: {dep}");
+                                    Console.WriteLine($"суммарно вы пополнили на {total_dep}");
+                                    Console.WriteLine("нажмите любую клавишу, чтобы продолжить");
+                                    Console.ReadKey();
+                                }
+                                else
+                                {
+                                    Console.WriteLine("некорректный ввод");
+                                    goto cont_change_dep;
+                                }
+                                Console.WriteLine();
+                                break;
+                            case ("БЕТ"):
+                            cont_change_bet: { }
+                                Console.WriteLine();
+                                Console.WriteLine("введите новую сумму ставки:");
+                                if (UInt32.TryParse(Console.ReadLine(), out bet))
+                                {
+                                    Console.WriteLine($"успешная смена, теперь ваша ставка: {bet}");
+                                    Console.WriteLine("нажмите любую клавишу, чтобы продолжить");
+                                    Console.ReadKey();
+                                }
+                                else
+                                {
+                                    Console.WriteLine("некорректный ввод");
+                                    goto cont_change_bet;
+                                }
+                                Console.WriteLine();
+                                break;
+                            case ("ПРОСМОТР"):
+                                Console.WriteLine("введите ваш код сыгровки:");
+                                Hashcode.uncode(Console.ReadLine());
+                                Console.WriteLine("нажмите любую клавишу, чтобы продолжить");
+                                Console.ReadKey();
+                                Console.WriteLine();
+                                break;
+                            case ("ВЫХОД"):
+                                total_bal = dep;
+                                Console.Clear();
+                                Console.WriteLine("вы совершили:");
+                                Console.WriteLine($"депозитов на сумму: {total_dep}");
+                                Console.WriteLine($"{count_spins_game} спин(-ов)(-а) на сумму: {total_bet}");
+                                Console.WriteLine($"а также, суммарно выиграли {total_win}");
+                                Console.WriteLine($"ваш баланс составляет {total_bal} это {((float)total_bal / total_dep) * 100}% от вашего(-их) депозита(-ов)");
+                                return;
+                            case ("МЕНЮ"):
+                                goto start;
+                        }
 
-            else if (user_input_start == "ПРОСМОТР")
-            {
-                Console.WriteLine("введите ваш код сыгровки:");
-                Hashcode.uncode(Console.ReadLine());
-            }
-
-            else
-            {
-                Console.Clear();
-                goto start;
+                        total_bet += bet;
+                        total_win += total_win_game(dep, bet);
+                    }
+                case "ПРАВИЛА":
+                    Console.Clear();
+                    Printer.slot_rule();
+                    Console.ReadKey();
+                    goto start;
+                case "ВЫХОД":
+                    Console.Clear();
+                    return;
+                case "ПРОСМОТР":
+                    Console.WriteLine("введите ваш код сыгровки:");
+                    Hashcode.uncode(Console.ReadLine());
+                    break;
+                default:
+                    Console.Clear();
+                    goto start;
             }
         }
     }

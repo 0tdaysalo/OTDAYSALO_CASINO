@@ -10,11 +10,11 @@ namespace SLOT_1
             //можно будет воспроизвести спин
             string code = string.Empty;
 
-            for (int i = 0; i < Const.length; i++)
+            for (uint i = 0; i < Const.length; i++)
             {
-                for (int j = 0; j < Const.length; j++)
+                for (uint j = 0; j < Const.length; j++)
                 {
-                    for (int k = 0; k < Const.array_symbols.Length; k++)
+                    for (uint k = 0; k < Const.array_symbols.Length; k++)
                     {
                         if (slot[i, j] == Const.array_symbols[k])
                         {
@@ -43,20 +43,20 @@ namespace SLOT_1
 
             //перевернутая последовательнсть в виде массива(заполненная ниже)
             string[] decode_str_rev_arr = new string[decode_str_rev.Length];
-            for (int i = 0; i < decode_str_rev.Length; i++)
+            for (uint i = 0; i < decode_str_rev.Length; i++)
             {
-                decode_str_rev_arr[i] = decode_str_rev[i].ToString();
+                decode_str_rev_arr[i] = decode_str_rev[(int)i].ToString();
                 if (decode_str_rev_arr[i] == "A")
                 {
                     decode_str_rev_arr[i] = 10.ToString();
                 }
             }
 
-            for (int i = 0; i < Const.length; i++) 
+            for (uint i = 0; i < Const.length; i++)
             {
-                for (int j = 0; j < Const.length; j++)
+                for (uint j = 0; j < Const.length; j++)
                 {
-                    int index = (i*Const.length) + j; 
+                    uint index = (i * Const.length) + j;
                     slot_func[i, j] = Const.array_symbols[Convert.ToInt32(decode_str_rev_arr[index])];
                 }
             }

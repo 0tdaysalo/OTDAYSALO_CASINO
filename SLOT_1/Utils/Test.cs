@@ -37,7 +37,7 @@ namespace SLOT_1
         }
 
         //подсчет среднего возврата от ставки
-        public static float roi(int balance, int bet, int count)
+        public static float roi(uint balance, uint bet, uint count)
         {
             //функция нужна для случая смены:
             // - комбинаций
@@ -50,10 +50,10 @@ namespace SLOT_1
             //теоретическая возврат в сумме средний за 10 раз 
             float teor_roi = 0;
 
-            for (int i = 0; i < 10; i++)
+            for (uint i = 0; i < 10; i++)
             {
-                int n = 1_000_000, sum = 0;
-                for (int j = 0; j < n; j++)
+                uint n = 1_000_000, sum = 0;
+                for (uint j = 0; j < n; j++)
                 {
                     sum += make_auto_spin_without_info(balance, bet, count);
                 }
@@ -66,24 +66,24 @@ namespace SLOT_1
         }
 
         //кол-во спинов, пока balance >= bet 
-        public static int check_count_spins(int balance, int bet)
+        public static uint check_count_spins(uint balance, uint bet)
         {
             //полученный выигрыш учитывается
-            int count = 0;
+            uint count = 0;
             while (balance >= bet)
             {
                 count++;
                 Slot.random_fill();
-                int win = Pay.pay_out(bet, Slot.get_win_set());
+                uint win = Pay.pay_out(bet, Slot.get_win_set());
                 balance = Pay.give_win(bet, win, balance);
             }
             return count;
         }
 
         //авто-запуск слотов для определенного баланса, без вывода инфо
-        public static int make_auto_spin_without_info(int balance, int bet, int n)
+        public static uint make_auto_spin_without_info(uint balance, uint bet, uint n)
         {
-            for (int i = 0; i < n; i++)
+            for (uint i = 0; i < n; i++)
             {
                 if (balance < bet)
                 {
@@ -94,7 +94,7 @@ namespace SLOT_1
 
                 Slot.random_fill();
 
-                int win = Pay.pay_out(bet, Slot.get_win_set());
+                uint win = Pay.pay_out(bet, Slot.get_win_set());
 
                 balance = Pay.give_win(bet, win, balance);
             }
@@ -105,9 +105,9 @@ namespace SLOT_1
         //попытка создания графика (пока что не трогать)
         public static void graph()
         {
-            for (int i = 1; i < 100; i++)
+            for (uint i = 1; i < 100; i++)
             {
-                for (int j = 1; j < 11; j++)
+                for (uint j = 1; j < 11; j++)
                 {
                     Console.WriteLine($"это значение на координатах (y)... (x){j} {roi(j, 1, j)}");
 

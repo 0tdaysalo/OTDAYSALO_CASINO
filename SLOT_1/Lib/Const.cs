@@ -5,16 +5,16 @@ namespace SLOT_1
     public static class Const
     {
         //основная длина слота 3 сивмола(вертикально и горизонтально)
-        public const int length = 3;
+        public const uint length = 3;
 
         //5 играющих линий
-        public const int count_lines = 5;
+        public const uint count_lines = 5;
 
         //11 символов слота последовательной значимости
-        public static readonly char[] array_symbols = { '1', 'J', 'Q', 'K', 'A', '@', '#', '$', '%', '&', '0' };
+        public static readonly char[] array_symbols = { '1', 'J', 'Q', 'K', 'A', '@', '#', '$', '%', '7', '0' };
 
         //выплаты по символам 
-        public static readonly Dictionary<char, int> array_symbols_dic = new Dictionary<char, int>()
+        public static readonly Dictionary<char, uint> array_symbols_dic = new Dictionary<char, uint>()
         {
             {array_symbols[0], 1},
             {array_symbols[1], 1},
