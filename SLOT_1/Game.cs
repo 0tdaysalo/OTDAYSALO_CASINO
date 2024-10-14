@@ -152,6 +152,7 @@ namespace SLOT_1
                     Console.Clear();
                     return;
                 case "ПРОСМОТР":
+                    Console.Clear();
                     Console.WriteLine("введите ваш код сыгровки:");
                     Hashcode.uncode(Console.ReadLine());
                     break;

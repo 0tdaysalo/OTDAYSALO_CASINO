@@ -96,22 +96,21 @@ namespace SLOT_1
         public static void info_about_spin(uint win, char[] arr_of_lines, uint balance_after_spin, uint bet)
         {
             slot_print();
-            if (win != 0)
+            Console.WriteLine($"баланс: {balance_after_spin}, ставка: {bet}");
+            if (win == 0)
+            {
+                Console.WriteLine("сожалеем, ставка не сыграла, попробуйте ещё раз");
+            }
+            else
             {
                 Console.WriteLine($"поздравляем, вы выиграли монет {win}");
-                Console.WriteLine($"баланс: {balance_after_spin}, ставка: {bet}");
                 for (uint i = 0; i < arr_of_lines.Length; i++)
                 {
                     if (arr_of_lines[i] != 0)
                     {
-                        Console.WriteLine("сыграла  линия: {0}", i + 1);
+                        Console.WriteLine($"сыграла  линия: {i + 1}");
                     }
                 }
-            }
-            else
-            {
-                Console.WriteLine($"сожалеем, ставка не сыграла, попробуйте ещё раз");
-                Console.WriteLine($"баланс: {balance_after_spin}, ставка: {bet}");
             }
             Console.WriteLine($"Hashcode спина: {Hashcode.code(Slot.slot)}");
         }
@@ -139,7 +138,7 @@ namespace SLOT_1
             Console.WriteLine("линия считается сыгравшей, если в ней имеется 3 одинаковых символа");
             foreach (var symbol in Const.array_symbols_dic)
             {
-                Console.WriteLine($"символ {symbol.Key} увеличивает ставку в {symbol.Value} раз");
+                Console.WriteLine($"символ {symbol.Key} увеличивает ставку в {symbol.Value} раз(а)");
             }
             Console.WriteLine($"максимальный выигрыш составляет X{Const.array_symbols_dic.Values.Max() * Const.count_lines} от ставки");
             Console.WriteLine("теоретический процент возврата вашего баланса составляет 97,7%");
@@ -150,12 +149,14 @@ namespace SLOT_1
             Console.WriteLine("если вы желаете внести депзоит, введите ДЕП после начала игры");
             Console.WriteLine("если вы желаете изменить ставку, введите БЕТ после начала игры");
             Console.WriteLine("если вы желаете завершить игру введите ВЫХОД после начала игры");
+            Console.WriteLine("если вы желаете выйти в начальное меню введите МЕНЮ после начала игры");
             Console.WriteLine("при завершении игры вам будет видна ваша статистика");
 
             Console.WriteLine();
 
             Console.WriteLine("НИКОГДА НЕ ИГРАЙТЕ В АЗАРТНЫЕ ИГРЫ, А ТЕМ БОЛЕЕ В КАЗИНО, ИНАЧЕ ВЫ ОСТАНЕТЕСЬ В МИНУСЕ");
-            Console.WriteLine("\nнажмите на любую клавишу, чтобы выйти покинуть раздел правил");
+            Console.WriteLine();
+            Console.WriteLine("нажмите на любую клавишу, чтобы выйти покинуть раздел правил");
         }
     }
 }

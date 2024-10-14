@@ -37,7 +37,7 @@ namespace SLOT_1
         }
 
         //подсчет среднего возврата от ставки
-        public static float roi(uint balance, uint bet, uint count)
+        public static float roi(uint balance, uint bet, uint count_spins)
         {
             //функция нужна для случая смены:
             // - комбинаций
@@ -46,7 +46,7 @@ namespace SLOT_1
             //чтобы оценить выгодность внесённых изменений, потому что казино всегда должно быть в плюсе
 
 
-            //учитывается баланс при определенной ставке (10 * n * count) раз
+            //учитывается баланс при определенной ставке (10 * n * count_spins) раз
             //теоретическая возврат в сумме средний за 10 раз 
             float teor_roi = 0;
 
@@ -55,7 +55,7 @@ namespace SLOT_1
                 uint n = 1_000_000, sum = 0;
                 for (uint j = 0; j < n; j++)
                 {
-                    sum += make_auto_spin_without_info(balance, bet, count);
+                    sum += make_auto_spin_without_info(balance, bet, count_spins);
                 }
                 //теоретическая возврат в сумме
                 float teor_ret = (float)sum / n;                                  //в процентах
@@ -69,34 +69,36 @@ namespace SLOT_1
         public static uint check_count_spins(uint balance, uint bet)
         {
             //полученный выигрыш учитывается
-            uint count = 0;
+            uint count_spins = 0;
             while (balance >= bet)
             {
-                count++;
+                count_spins++;
+
                 Slot.random_fill();
                 uint win = Pay.pay_out(bet, Slot.get_win_set());
                 balance = Pay.give_win(bet, win, balance);
             }
-            return count;
+            return count_spins;
         }
 
         //авто-запуск слотов для определенного баланса, без вывода инфо
-        public static uint make_auto_spin_without_info(uint balance, uint bet, uint n)
+        public static uint make_auto_spin_without_info(uint balance, uint bet, uint count_spins)
         {
-            for (uint i = 0; i < n; i++)
+            for (uint i = 0; i < count_spins; i++)
             {
-                if (balance < bet)
+                if (balance >= bet)
                 {
+                    Slot.random_fill();
+                    uint win = Pay.pay_out(bet, Slot.get_win_set());
+                    balance = Pay.give_win(bet, win, balance);
+                }
+                else
+                {
+
                     Console.WriteLine("недостаточно средств! игра приостановлена");
                     Console.WriteLine();
                     break;
                 }
-
-                Slot.random_fill();
-
-                uint win = Pay.pay_out(bet, Slot.get_win_set());
-
-                balance = Pay.give_win(bet, win, balance);
             }
 
             return balance;

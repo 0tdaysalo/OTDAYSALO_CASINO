@@ -4,27 +4,34 @@ namespace SLOT_1
 {
     public static class Hashcode
     {
-        //хэширование данных о спине в виде 
+        //хэширование данных о спине в виде строки
         public static string code(char[,] slot)
         {
-            //можно будет воспроизвести спин
             string code = string.Empty;
 
             for (uint i = 0; i < Const.length; i++)
             {
                 for (uint j = 0; j < Const.length; j++)
                 {
-                    for (uint k = 0; k < Const.array_symbols.Length; k++)
+                    int symbolIndex = Array.IndexOf(Const.array_symbols, slot[i, j]);
+
+                    if (symbolIndex >= 0)
                     {
-                        if (slot[i, j] == Const.array_symbols[k])
-                        {
-                            code += k.ToString("X");
-                        }
+                        //если символ находится в массиве, то добавляем его индекс в шестнадцатеричной системе
+                        code += symbolIndex.ToString("X");
+                    }
+                    else
+                    {
+                        throw new Exception("Символ не найден в массиве допустимых символов.");
                     }
                 }
             }
-            code = add_confus(code);
-            Int64 time = (long)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalMilliseconds;
+
+            //переворот строки
+            code = reverse_string(code);
+
+            //сдобавление времени
+            long time = (long)DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1)).TotalMilliseconds;
             code += "_" + time.ToString();
 
             return code;
@@ -34,52 +41,61 @@ namespace SLOT_1
         public static void uncode(string code)
         {
             string[] uncode_string = code.Split('_');
-            char[,] slot_func = new char[Const.length, Const.length];
-
-            //первая часть
-
-            //переворачиваем строку
-            string decode_str_rev = add_confus((uncode_string[0]));
-
-            //перевернутая последовательнсть в виде массива(заполненная ниже)
-            string[] decode_str_rev_arr = new string[decode_str_rev.Length];
-            for (uint i = 0; i < decode_str_rev.Length; i++)
+            if (uncode_string.Length != 2)
             {
-                decode_str_rev_arr[i] = decode_str_rev[(int)i].ToString();
-                if (decode_str_rev_arr[i] == "A")
-                {
-                    decode_str_rev_arr[i] = 10.ToString();
-                }
+                throw new Exception("Неверный формат хэш-кода.");
             }
 
+            char[,] slot_func = new char[Const.length, Const.length];
+
+            // Первая часть - раскодируем строку
+            string decoded_str = reverse_string(uncode_string[0]);
+
+            // Проверяем длину строки для корректной обработки
+            if (decoded_str.Length != Const.length * Const.length)
+            {
+                throw new Exception("Длина раскодированной строки не соответствует ожидаемой длине.");
+            }
+
+            // Преобразуем раскодированную строку в символы
             for (uint i = 0; i < Const.length; i++)
             {
                 for (uint j = 0; j < Const.length; j++)
                 {
                     uint index = (i * Const.length) + j;
-                    slot_func[i, j] = Const.array_symbols[Convert.ToInt32(decode_str_rev_arr[index])];
+                    string hexValue = decoded_str[(int)index].ToString();
+
+                    // Парсим символ как шестнадцатеричное число
+                    int symbolIndex = int.Parse(hexValue, System.Globalization.NumberStyles.HexNumber);
+
+                    // Проверяем допустимость индекса символа
+                    if (symbolIndex >= 0 && symbolIndex < Const.array_symbols.Length)
+                    {
+                        slot_func[i, j] = Const.array_symbols[symbolIndex];
+                    }
+                    else
+                    {
+                        throw new Exception("Неверный индекс символа при декодировании.");
+                    }
                 }
             }
 
-            //вторая часть
-
-            long date = (long)Convert.ToUInt64((uncode_string[1]));
+            // Вторая часть - метка времени
+            long date = long.Parse(uncode_string[1]);
             DateTime unix_epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             long time_stamp_tick = date * TimeSpan.TicksPerMillisecond;
-            var date_time = new DateTime(unix_epoch.Ticks + time_stamp_tick, DateTimeKind.Utc);
+            DateTime date_time = new DateTime(unix_epoch.Ticks + time_stamp_tick, DateTimeKind.Utc);
 
-            //вывод
+            // Вывод результата
             Console.WriteLine();
-            Console.WriteLine($"по коду вашего спина равного: {code} найдена комбинация");
+            Console.WriteLine($"По коду вашего спина равного: {code}, найдена комбинация:");
             Printer.slot_print(slot_func);
-            Console.WriteLine($"которая была сделана: {date_time} GMT+0");
-
+            Console.WriteLine($"Которая была сделана: {date_time} GMT+0");
         }
 
         //переворот строки
-        private static string add_confus(string str)
+        private static string reverse_string(string str)
         {
-            //вспомогательная функция для hash_code и hash_uncode
             char[] arr = str.ToCharArray();
             Array.Reverse(arr);
             return new string(arr);
