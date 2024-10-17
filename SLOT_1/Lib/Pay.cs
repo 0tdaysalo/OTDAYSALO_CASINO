@@ -12,7 +12,7 @@
             {
                 if (arr_of_lines[i] != 0)
                 {
-                    foreach (var win in Const.array_symbols_dic)
+                    foreach (var win in Const.array_symbols_pay)
                     {
                         if (arr_of_lines[i] == win.Key)
                             total_win += bet * win.Value;

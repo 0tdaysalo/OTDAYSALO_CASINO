@@ -15,9 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "interfaces", "interfaces", "{4D6E8CEB-63EA-4E4B-B193-21C950941C2E}"
-	ProjectSection(SolutionItems) = preProject
-		SLOT_1\ISlotConfig.cs = SLOT_1\ISlotConfig.cs
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

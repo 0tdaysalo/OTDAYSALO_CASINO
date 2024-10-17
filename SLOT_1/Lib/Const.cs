@@ -14,7 +14,7 @@ namespace SLOT_1
         public static readonly char[] array_symbols = { '1', 'J', 'Q', 'K', 'A', '@', '#', '$', '%', '7', '0' };
 
         //выплаты по символам 
-        public static readonly Dictionary<char, uint> array_symbols_dic = new Dictionary<char, uint>()
+        public static readonly Dictionary<char, uint> array_symbols_pay = new Dictionary<char, uint>()
         {
             {array_symbols[0], 1},
             {array_symbols[1], 1},

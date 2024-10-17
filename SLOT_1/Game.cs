@@ -40,7 +40,7 @@ namespace SLOT_1
                     Console.WriteLine("введите сумму вашего депозита:");
                     if (!UInt32.TryParse(Console.ReadLine(), out uint dep))
                     {
-                        Console.WriteLine("некорректный ввод");
+                        Printer.slot_invalid_input();
                         goto input_dep;
                     }
                     Console.Clear();
@@ -51,14 +51,14 @@ namespace SLOT_1
                     Console.WriteLine("введите сумму вашей ставки:");
                     if (!UInt32.TryParse(Console.ReadLine(), out uint bet))
                     {
-                        Console.WriteLine("некорректный ввод");
+                        Printer.slot_invalid_input();
                         goto input_bet;
                     }
                     Console.Clear();
 
                     if (bet <= 0 || dep <= 0)
                     {
-                        Console.WriteLine("некорректный ввод");
+                        Printer.slot_invalid_input();
                         Console.WriteLine($"с какой целью вы вводите {bet} и {dep}?");
                         return;
                     }
@@ -83,7 +83,7 @@ namespace SLOT_1
                         string user_input_game = Console.ReadLine();
                         switch (user_input_game)
                         {
-                            case ("ДЕП"):
+                            case ("ПОПОЛНИТЬ"):
                             cont_change_dep: { }
                                 Console.WriteLine();
                                 Console.WriteLine("введите сумму:");
@@ -98,12 +98,12 @@ namespace SLOT_1
                                 }
                                 else
                                 {
-                                    Console.WriteLine("некорректный ввод");
+                                    Printer.slot_invalid_input();
                                     goto cont_change_dep;
                                 }
                                 Console.WriteLine();
                                 break;
-                            case ("БЕТ"):
+                            case ("СТАВКА"):
                             cont_change_bet: { }
                                 Console.WriteLine();
                                 Console.WriteLine("введите новую сумму ставки:");
@@ -115,7 +115,7 @@ namespace SLOT_1
                                 }
                                 else
                                 {
-                                    Console.WriteLine("некорректный ввод");
+                                    Printer.slot_invalid_input();
                                     goto cont_change_bet;
                                 }
                                 Console.WriteLine();
@@ -144,20 +144,27 @@ namespace SLOT_1
                         total_win += total_win_game(dep, bet);
                     }
                 case "ПРАВИЛА":
+                case "ПРОСМОТР":
                     Console.Clear();
-                    Printer.slot_rule();
-                    Console.ReadKey();
+                    Console.WriteLine("введите МЕНЮ, чтобы выйти из режима просмотра");
+                    while (true)
+                    {
+                        Console.WriteLine("введите ваш код сыгровки:");
+                        string user_input = Console.ReadLine();
+                        if (user_input == "МЕНЮ")
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            Hashcode.uncode(user_input);
+                        }
+                    }
                     goto start;
                 case "ВЫХОД":
                     Console.Clear();
                     return;
-                case "ПРОСМОТР":
-                    Console.Clear();
-                    Console.WriteLine("введите ваш код сыгровки:");
-                    Hashcode.uncode(Console.ReadLine());
-                    break;
                 default:
-                    Console.Clear();
                     goto start;
             }
         }

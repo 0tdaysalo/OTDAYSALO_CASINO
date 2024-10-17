@@ -60,8 +60,6 @@ namespace SLOT_1
             Console.WriteLine("-----");
             for (uint i = 0; i < Const.length; i++)
             {
-
-
                 Console.Write("|");
                 for (uint j = 0; j < Const.length; j++)
                 {
@@ -70,8 +68,6 @@ namespace SLOT_1
                 }
                 Console.ResetColor();
                 Console.WriteLine("|");
-
-
             }
             Console.WriteLine("-----");
         }
@@ -85,8 +81,10 @@ namespace SLOT_1
                 Console.Write("|");
                 for (uint j = 0; j < Const.length; j++)
                 {
+                    Console.ForegroundColor = symb_color(slot[i, j]);
                     Console.Write(slot[i, j]);
                 }
+                Console.ResetColor();
                 Console.WriteLine("|");
             }
             Console.WriteLine("-----");
@@ -115,17 +113,19 @@ namespace SLOT_1
             Console.WriteLine($"Hashcode спина: {Hashcode.code(Slot.slot)}");
         }
 
+        //вызывается в Game.Game() в самом начале, главное меню 
         public static void slot_start()
         {
             Console.WriteLine("0TDAYSALO_CASINO, SLOT_1");
-            Printer.slot_print('0');
+            slot_print('0');
             Console.WriteLine("!перед началом обязательно ознакомьтесь с правилами!");
             Console.WriteLine("введите СТАРТ, чтобы запустить игру");
             Console.WriteLine("введите ПРАВИЛА, чтобы отобразить их");
-            Console.WriteLine("введите ВЫХОД, чтобы покинуть игру");
             Console.WriteLine("введите ПРОСМОТР, чтобы отобразить сыгровку символов");
+            Console.WriteLine("введите ВЫХОД, чтобы покинуть игру");
         }
 
+        //все правила слота
         public static void slot_rule()
         {
             Console.WriteLine("ПРАВИЛА SLOT_1:");
@@ -136,18 +136,18 @@ namespace SLOT_1
             Console.WriteLine("вы выигрываете увеличение ставки на определенный множитель");
             Console.WriteLine($"в игре {Const.count_lines} играющих линий, 3 горизонтальных и 2 по диагонали");
             Console.WriteLine("линия считается сыгравшей, если в ней имеется 3 одинаковых символа");
-            foreach (var symbol in Const.array_symbols_dic)
+            foreach (var symbol in Const.array_symbols_pay)
             {
                 Console.WriteLine($"символ {symbol.Key} увеличивает ставку в {symbol.Value} раз(а)");
             }
-            Console.WriteLine($"максимальный выигрыш составляет X{Const.array_symbols_dic.Values.Max() * Const.count_lines} от ставки");
+            Console.WriteLine($"максимальный выигрыш составляет X{Const.array_symbols_pay.Values.Max() * Const.count_lines} от ставки");
             Console.WriteLine("теоретический процент возврата вашего баланса составляет 97,7%");
 
             Console.WriteLine();
 
             Console.WriteLine("чтобы играть жмите Enter");
-            Console.WriteLine("если вы желаете внести депзоит, введите ДЕП после начала игры");
-            Console.WriteLine("если вы желаете изменить ставку, введите БЕТ после начала игры");
+            Console.WriteLine("если вы желаете внести депзоит, введите ПОПОЛНИТЬ после начала игры");
+            Console.WriteLine("если вы желаете изменить ставку, введите СТАВКА после начала игры");
             Console.WriteLine("если вы желаете завершить игру введите ВЫХОД после начала игры");
             Console.WriteLine("если вы желаете выйти в начальное меню введите МЕНЮ после начала игры");
             Console.WriteLine("при завершении игры вам будет видна ваша статистика");
@@ -156,7 +156,13 @@ namespace SLOT_1
 
             Console.WriteLine("НИКОГДА НЕ ИГРАЙТЕ В АЗАРТНЫЕ ИГРЫ, А ТЕМ БОЛЕЕ В КАЗИНО, ИНАЧЕ ВЫ ОСТАНЕТЕСЬ В МИНУСЕ");
             Console.WriteLine();
-            Console.WriteLine("нажмите на любую клавишу, чтобы выйти покинуть раздел правил");
+            Console.WriteLine("нажмите на любую клавишу, чтобы выйти из раздела правил");
         }
+
+        public static void slot_invalid_input()
+        {
+            Console.WriteLine("некорректный ввод");
+        }
+
     }
 }
