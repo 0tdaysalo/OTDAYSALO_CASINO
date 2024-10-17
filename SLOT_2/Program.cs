@@ -5,12 +5,12 @@ namespace SLOT_2
 {
     public static class Program
     {
-       //слот
+        //слот
         public static char[,] slot = new char[Const.length, Const.length];
 
         //эточе
         public static List<MatrixWalk> list_of_games_symbols = new List<MatrixWalk>();
- 
+
         //проход по областям играющих символов
         public static bool going_symbols(char[,] slot_going)
         {
@@ -188,7 +188,7 @@ namespace SLOT_2
 
             return slot_not_play_droped;
         }
-     
+
         public static void Main()
         {
             Auto.slot_after_one_spin(slot);

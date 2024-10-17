@@ -62,7 +62,7 @@ namespace SLOT_2
             {
                 Console.ResetColor();
                 Console.WriteLine($"поздравляем! {check_scatter} - S, вы выиграли {Const.arr_symb_dic_mlt_S[check_scatter]} бонусных вращений");
-            }      
-        }   
+            }
+        }
     }
 }

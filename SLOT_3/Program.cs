@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SLOT_3
+﻿namespace SLOT_3
 {
     public class Program
-    {   
+    {
         //пока что только в разработке :(
         static void Main()
         {
