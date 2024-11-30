@@ -91,8 +91,9 @@ namespace SLOT_1
                                 {
                                     dep += new_dep;
                                     total_dep += new_dep;
-                                    Console.WriteLine($"успешное пополнение, теперь ваш баланс: {dep}");
-                                    Console.WriteLine($"суммарно вы пополнили на {total_dep}");
+                                    Console.WriteLine($"успешное пополнение, на {new_dep}");
+                                    Console.WriteLine($"ваш баланс: {dep}");
+                                    Console.WriteLine($"суммарно вы пополнили баланс на {total_dep}");
                                     Console.WriteLine("нажмите любую клавишу, чтобы продолжить");
                                     Console.ReadKey();
                                 }
@@ -103,6 +104,7 @@ namespace SLOT_1
                                 }
                                 Console.WriteLine();
                                 break;
+
                             case ("СТАВКА"):
                             cont_change_bet: { }
                                 Console.WriteLine();
@@ -120,6 +122,7 @@ namespace SLOT_1
                                 }
                                 Console.WriteLine();
                                 break;
+
                             case ("ПРОСМОТР"):
                                 Console.WriteLine("введите ваш код сыгровки:");
                                 Hashcode.uncode(Console.ReadLine());
@@ -127,6 +130,7 @@ namespace SLOT_1
                                 Console.ReadKey();
                                 Console.WriteLine();
                                 break;
+
                             case ("ВЫХОД"):
                                 total_bal = dep;
                                 Console.Clear();
@@ -136,6 +140,7 @@ namespace SLOT_1
                                 Console.WriteLine($"а также, суммарно выиграли {total_win}");
                                 Console.WriteLine($"ваш баланс составляет {total_bal} это {((float)total_bal / total_dep) * 100}% от вашего(-их) депозита(-ов)");
                                 return;
+
                             case ("МЕНЮ"):
                                 goto start;
                         }
@@ -143,15 +148,21 @@ namespace SLOT_1
                         total_bet += bet;
                         total_win += total_win_game(dep, bet);
                     }
+
                 case "ПРАВИЛА":
+                    Console.Clear();
+                    Printer.slot_rule();
+                    Console.ReadKey();
+                    goto start;
+
                 case "ПРОСМОТР":
                     Console.Clear();
-                    Console.WriteLine("введите МЕНЮ, чтобы выйти из режима просмотра");
+                    Console.WriteLine("введите МЕНЮ или ВЫХОД, чтобы выйти из режима просмотра");
                     while (true)
                     {
                         Console.WriteLine("введите ваш код сыгровки:");
                         string user_input = Console.ReadLine();
-                        if (user_input == "МЕНЮ")
+                        if (user_input == "МЕНЮ" || user_input == "ВЫХОД")
                         {
                             break;
                         }
@@ -161,9 +172,11 @@ namespace SLOT_1
                         }
                     }
                     goto start;
+
                 case "ВЫХОД":
                     Console.Clear();
                     return;
+
                 default:
                     goto start;
             }

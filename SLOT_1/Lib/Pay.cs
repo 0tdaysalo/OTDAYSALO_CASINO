@@ -5,7 +5,7 @@
         //подсчет выплат
         public static uint pay_out(uint bet, char[] arr_of_lines)
         {
-            //используется словарь: ключ - значение
+            //используется словарь: символы - победа
 
             uint total_win = 0;
             for (uint i = 0; i < arr_of_lines.Length; i++)

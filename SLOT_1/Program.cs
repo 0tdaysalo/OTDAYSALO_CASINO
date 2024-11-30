@@ -8,7 +8,6 @@ namespace SLOT_1
         {
             Game.game();
 
-
             Thread.Sleep(12000);
             //Console.ReadKey();
         }

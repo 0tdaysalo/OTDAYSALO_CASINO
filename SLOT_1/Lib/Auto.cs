@@ -69,7 +69,6 @@ namespace SLOT_1
             {
                 Console.WriteLine("недостаточно средств! игра приостановлена");
                 Console.WriteLine($"баланс: {balance}, ставка: {bet}");
-                Console.WriteLine();
             }
             else
             {
