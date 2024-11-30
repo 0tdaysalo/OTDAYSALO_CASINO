@@ -65,10 +65,11 @@ namespace SLOT_1
         {
             //number_spins это номер спина, а не количество спинов
             //нужно для Game.game()
-            if (balance < bet)
+            if (balance < bet || balance == 0)
             {
                 Console.WriteLine("недостаточно средств! игра приостановлена");
                 Console.WriteLine($"баланс: {balance}, ставка: {bet}");
+                Console.WriteLine();
             }
             else
             {
